@@ -1,0 +1,64 @@
+@import "tailwindcss";
+@tailwind utilities;
+@theme {
+  /* Font */
+  --font-poppins: var(--font-poppins);
+
+  /* Primary Purple */
+  --color-primary: #6756d6;
+  --color-primary-light: #f0eeff;
+  --color-primary-dark: #5646c4;
+
+  /* Background */
+  --color-background: #f7f7fb;
+  --color-white: #ffffff;
+
+  /* Text */
+  --color-text-primary: #303039;
+  --color-text-secondary: #85838f;
+  --color-text-muted: #b5b3bd;
+
+  /* Border */
+  --color-border: #eeeef3;
+
+  /* Status / Dashboard */
+  --color-purple: #6756d6;
+  --color-blue: #63b9df;
+  --color-green: #9acb78;
+  --color-red: #e86f91;
+  --color-yellow: #e8bd63;
+
+  /* Light backgrounds used behind status icons */
+  --color-purple-bg: #f0eeff;
+  --color-blue-bg: #edf8fc;
+  --color-green-bg: #f1f9ed;
+  --color-red-bg: #fff0f3;
+  --color-yellow-bg: #fff8e8;
+}
+body {
+  color: #303039;
+  background-color: #f7f7fb;
+  font-family: var(--font-poppins), Arial, sans-serif;
+}
+.active-sidebar {
+  background-color: #6756d6;
+  border-radius: 6px;
+  color: white;
+
+  transition: all 300ms ease-in-out;
+}
+@keyframes pageEnter {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-page-enter {
+  animation: pageEnter 300ms ease-out;
+}
