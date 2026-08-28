@@ -16,18 +16,18 @@ const dateString = `${dayName} , ${day}-${month}-${year}`;
 function Header({ title, showDate }: headerProps) {
   return (
     <div>
-      <div className="p-6 pb-0 flex justify-between items-center">
-        <div>
+      <div className="p-6 pb-0 flex  justify-between items-center flex-wrap">
+        <div className="md:block flex flex-col">
           <span className="font-extrabold">{title}</span>
           {showDate ? (
-            <span className="text-[10px] pl-2">{dateString}</span>
+            <span className="text-[10px] md:pl-2 ">{dateString}</span>
           ) : (
             ""
           )}
         </div>
         <div>
           <div className="flex items-center gap-5">
-            <div className="flex items-center gap-2">
+            <div className="hidden  md:flex md:gap-2 md:items-center">
               <span className="font-bold text-sm">Create Task</span>
               <span className="bg-primary p-2 rounded-[100%]  font-bold text-white hover:bg-primary-dark">
                 <svg
@@ -49,7 +49,7 @@ function Header({ title, showDate }: headerProps) {
               <div>
                 <div className="flex items-center">
                   <Image width={30} height={30} src={Boy} alt="boy-icon" />
-                  <span className="pl-3 pr-3 text-sm font-bold">
+                  <span className="pl-3 pr-3 text-sm font-bold hidden md:block">
                     Nasir jamshed
                   </span>
                   <svg
@@ -57,7 +57,7 @@ function Header({ title, showDate }: headerProps) {
                     width="16"
                     height="16"
                     fill="currentColor"
-                    className="bi bi-chevron-down"
+                    className="bi bi-chevron-down hidden md:block"
                     viewBox="0 0 16 16"
                   >
                     <path
@@ -68,7 +68,7 @@ function Header({ title, showDate }: headerProps) {
                 </div>
               </div>
             </div>
-            <div className="ml-20">
+            <div className="md:ml-20 ml-0">
               <Image width={30} height={30} src={Notif} alt="notif-icon" />
             </div>
           </div>
