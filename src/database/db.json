@@ -1,0 +1,183 @@
+{
+  "tasks": [
+    {
+      "id": "1",
+      "title": "Medical Dashboard UI",
+      "project": "Medical",
+      "status": "ongoing",
+      "progress": 85,
+      "dueDate": "2026-09-24",
+      "assignees": ["1", "2", "3"]
+    },
+    {
+      "id": "2",
+      "title": "Wallet App Design",
+      "project": "Finance",
+      "status": "process",
+      "progress": 72,
+      "dueDate": "2026-09-26",
+      "assignees": ["2", "4"]
+    },
+    {
+      "id": "3",
+      "title": "Landing Page Design",
+      "project": "Marketing",
+      "status": "complete",
+      "progress": 100,
+      "dueDate": "2026-09-28",
+      "assignees": ["1", "5"]
+    },
+    {
+      "id": "4",
+      "title": "Mobile App UI Kit",
+      "project": "Design",
+      "status": "ongoing",
+      "progress": 64,
+      "dueDate": "2026-09-30",
+      "assignees": ["3"]
+    },
+    {
+      "id": "5",
+      "title": "Admin Dashboard",
+      "project": "Development",
+      "status": "cancel",
+      "progress": 20,
+      "dueDate": "2026-10-01",
+      "assignees": ["4", "5"]
+    }
+  ],
+
+  "users": [
+    {
+      "id": "1",
+      "name": "John Smith",
+      "role": "UI Designer",
+      "avatar": "https://i.pravatar.cc/150?img=12"
+    },
+    {
+      "id": "2",
+      "name": "Sarah Johnson",
+      "role": "Developer",
+      "avatar": "https://i.pravatar.cc/150?img=32"
+    },
+    {
+      "id": "3",
+      "name": "Michael Brown",
+      "role": "Project Manager",
+      "avatar": "https://i.pravatar.cc/150?img=11"
+    },
+    {
+      "id": "4",
+      "name": "Emily Davis",
+      "role": "Designer",
+      "avatar": "https://i.pravatar.cc/150?img=47"
+    },
+    {
+      "id": "5",
+      "name": "David Wilson",
+      "role": "Developer",
+      "avatar": "https://i.pravatar.cc/150?img=68"
+    }
+  ],
+
+  "messages": [
+    {
+      "id": "1",
+      "conversationId": "1",
+      "senderId": "1",
+      "text": "Hey! How are you?",
+      "time": "10:30 AM"
+    },
+    {
+      "id": "2",
+      "conversationId": "1",
+      "senderId": "2",
+      "text": "I'm great, how about you?",
+      "time": "10:32 AM"
+    },
+    {
+      "id": "3",
+      "conversationId": "1",
+      "senderId": "1",
+      "text": "Can we schedule a meeting?",
+      "time": "10:34 AM"
+    }
+  ],
+
+  "notifications": [
+    {
+      "id": "1",
+      "title": "App Design Meeting",
+      "message": "You have a meeting in 30 minutes",
+      "time": "7:40 AM",
+      "type": "meeting",
+      "read": false
+    },
+    {
+      "id": "2",
+      "title": "Client Meeting",
+      "message": "Your meeting starts in 20 minutes",
+      "time": "12:00 PM",
+      "type": "meeting",
+      "read": false
+    },
+    {
+      "id": "3",
+      "title": "Project Team Meeting",
+      "message": "Join the project meeting",
+      "time": "4:30 PM",
+      "type": "meeting",
+      "read": true
+    },
+    {
+      "id": "4",
+      "title": "Task Completed",
+      "message": "Medical Dashboard UI completed",
+      "time": "Yesterday",
+      "type": "success",
+      "read": true
+    }
+  ],
+
+  "events": [
+    {
+      "id": "1",
+      "title": "App Design Meeting",
+      "date": "2026-09-03",
+      "time": "10:00 AM",
+      "type": "meeting"
+    },
+    {
+      "id": "2",
+      "title": "Client Meeting",
+      "date": "2026-09-12",
+      "time": "12:00 PM",
+      "type": "meeting"
+    },
+    {
+      "id": "3",
+      "title": "Project Team Meeting",
+      "date": "2026-09-24",
+      "time": "4:30 PM",
+      "type": "meeting"
+    }
+  ],
+
+  "summary": {
+    "totalTasks": 57,
+    "completed": 24,
+    "inProgress": 12,
+    "cancelled": 7,
+    "ongoing": 14
+  },
+
+  "profile": {
+    "id": "1",
+    "name": "Nasir Jamshed",
+    "role": "UI/UX Designer",
+    "email": "nasir@example.com",
+    "phone": "+123 456 7890",
+    "location": "United States",
+    "joined": "2026-01-20"
+  }
+}
