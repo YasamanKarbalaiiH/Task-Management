@@ -2,17 +2,12 @@
 import Image from "next/image";
 import Notif from "../img/icons8-notification-48.png";
 import Boy from "../img/icons8-boy-64.png";
+import dateHeader from "../hooks/useDate";
 interface headerProps {
   title: string;
   showDate: boolean;
 }
-//Date
-const now = new Date();
-const dayName = now.toLocaleDateString("en-US", { weekday: "long" });
-const day = String(now.getDate()).padStart(2, "0");
-const month = String(now.getMonth() + 1).padStart(2, "0");
-const year = now.getFullYear();
-const dateString = `${dayName} , ${day}-${month}-${year}`;
+
 function Header({ title, showDate }: headerProps) {
   return (
     <div>
@@ -20,7 +15,7 @@ function Header({ title, showDate }: headerProps) {
         <div className="md:block flex flex-col">
           <span className="font-extrabold">{title}</span>
           {showDate ? (
-            <span className="text-[10px] md:pl-2 ">{dateString}</span>
+            <span className="text-[10px] md:pl-2 ">{dateHeader()}</span>
           ) : (
             ""
           )}
@@ -48,7 +43,13 @@ function Header({ title, showDate }: headerProps) {
             <div>
               <div>
                 <div className="flex items-center">
-                  <Image width={30} height={30} src={Boy} alt="boy-icon" />
+                  <Image
+                    className="mt-2"
+                    width={30}
+                    height={30}
+                    src={Boy}
+                    alt="boy-icon"
+                  />
                   <span className="pl-3 pr-3 text-sm font-bold hidden md:block">
                     Nasir jamshed
                   </span>
@@ -68,7 +69,7 @@ function Header({ title, showDate }: headerProps) {
                 </div>
               </div>
             </div>
-            <div className="md:ml-20 ml-0">
+            <div className="md:ml-20 ml-0 mt-2">
               <Image width={30} height={30} src={Notif} alt="notif-icon" />
             </div>
           </div>

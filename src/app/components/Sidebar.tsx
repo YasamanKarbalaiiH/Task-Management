@@ -52,7 +52,7 @@ function Sidebar() {
       <aside
         className={`
     fixed left-0 top-0 z-50 sidebar-scroll
-    h-screen w-64 overflow-y-auto
+    h-screen w-auto overflow-y-auto
     bg-white rounded-r-2xl
     shadow-lg
     transition-transform duration-300
