@@ -51,18 +51,15 @@ function Sidebar() {
       )}
       <aside
         className={`
-    fixed left-0 top-0 z-50 sidebar-scroll
-    h-screen w-auto overflow-y-auto
+    fixed left-0 top-0 z-50
+    flex h-screen w-56 flex-col
+    overflow-y-auto
+    sidebar-scroll
     bg-white rounded-r-2xl
     shadow-lg
     transition-transform duration-300
-
-    ${isOpen ? "translate-x-0 flex flex-col" : "-translate-x-full"}
-
-    lg:static
+    ${isOpen ? "translate-x-0" : "-translate-x-full"}
     lg:translate-x-0
-    lg:flex
-    lg:flex-col
   `}
       >
         <div className="flex-1 p-4 md:p-7 ">

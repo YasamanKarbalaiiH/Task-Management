@@ -1,14 +1,18 @@
 import Header from "./components/Header";
 import Status from "./api/Status";
 import Tasks from "../app/api/Tasks";
+import TaskChartData from "./api/TaskChartData";
+import TaskChart from "./components/home/TaskChart";
+import TaskStatusPie from "./components/home/TaskStatusPie";
 import Alart from "../app/api/Alart";
-import TodayTasks from "./components/TodayTask";
-import AlartsCard from "./components/AlartsCard";
-import HomeCard from "./components/HomeCard";
+import TodayTasks from "./components/home/TodayTask";
+import AlartsCard from "./components/home/AlartsCard";
+import HomeCard from "./components/home/HomeCard";
 export default async function Home() {
   const stats = await Status();
   const data = await Tasks();
   const alart = await Alart();
+  const overview = await TaskChartData();
   return (
     <div>
       <Header title="Dashboard" showDate={true} />
@@ -18,10 +22,11 @@ export default async function Home() {
           <div>
             <HomeCard stats={stats} />
             <TodayTasks data={data} />
+            <TaskChart tasks={overview} />
           </div>
         </div>
         <div className="right-side mr-5 w-auto md:w-1/3">
-          <div className="chart"></div>
+          <TaskStatusPie tasks={overview} />
           <AlartsCard data={alart} />
         </div>
       </div>

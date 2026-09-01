@@ -22,9 +22,11 @@ function Header({ title, showDate }: headerProps) {
         </div>
         <div>
           <div className="flex items-center gap-5">
-            <div className="hidden  md:flex md:gap-2 md:items-center">
-              <span className="font-bold text-sm">Create Task</span>
-              <span className="bg-primary p-2 rounded-[100%]  font-bold text-white hover:bg-primary-dark">
+            <div className="flex gap-2 items-center">
+              <span className="font-bold text-sm hidden md:block">
+                Create Task
+              </span>
+              <span className="bg-primary mt-2 md:mt-0 p-2 rounded-[100%]  font-bold text-white hover:bg-primary-dark">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"

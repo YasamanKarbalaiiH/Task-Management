@@ -45,7 +45,7 @@ export default function TodayTasks({ data }: TodayTasksProps) {
         </button>
       </div>
 
-      <div className="flex gap-2 flex-wrap">
+      <div className="flex gap-2 flex-wrap justify-center lg:justify-start">
         {displayedTasks.map((item) => (
           <div key={item.title} className="bg-white p-5 rounded-xl">
             <div className="flex gap-5">

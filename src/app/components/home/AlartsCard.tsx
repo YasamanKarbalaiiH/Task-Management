@@ -1,10 +1,12 @@
 "use client";
 
 import { useState } from "react";
+import Swal from "sweetalert2";
 type Time = {
   title: string;
   time: string;
   type: string;
+  message: string;
 };
 interface Props {
   data: Time[];
@@ -17,7 +19,9 @@ function AlartsCard({ data }: Props) {
   };
 
   const displayed = showAll ? data : data.slice(0, 2);
-  console.log(displayed);
+  function alertMassage(message: string) {
+    Swal.fire(message);
+  }
   return (
     <div className="mt-7 bg-white p-5 rounded-xl">
       <div className="ml-3 flex justify-between">
@@ -33,6 +37,7 @@ function AlartsCard({ data }: Props) {
         {displayed.map((item) => (
           <div
             key={item.title}
+            onClick={() => alertMassage(item.message)}
             className="bg-white rounded-xl p-5 shadow-xl mb-2 flex justify-between gap-3"
           >
             <svg

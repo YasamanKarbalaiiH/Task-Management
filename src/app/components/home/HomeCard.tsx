@@ -1,7 +1,7 @@
-import Ongoing from "../img/icons8-in-progress-50.png";
-import Process from "../img/icons8-process-50.png";
-import Complete from "../img/icons8-complete-50.png";
-import Cancel from "../img/icons8-cancel-48.png";
+import Ongoing from "../../img/icons8-in-progress-50.png";
+import Process from "../../img/icons8-process-50.png";
+import Complete from "../../img/icons8-complete-50.png";
+import Cancel from "../../img/icons8-cancel-48.png";
 import Image from "next/image";
 interface statsType {
   cancel: number;

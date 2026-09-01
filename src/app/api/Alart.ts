@@ -2,18 +2,20 @@ interface alart {
   title: string;
   time: string;
   type: string;
+  message: string;
 }
 
 async function Alart() {
   const res = await fetch("http://localhost:8000/notifications");
   if (!res.ok) {
-    throw new Error("Failed to fetch tasks");
+    throw new Error("Failed to fetch notifs");
   }
   const data: alart[] = await res.json();
   const alarts = data.map((item) => ({
     title: item.title,
     time: item.time,
     type: item.type,
+    message: item.message,
   }));
   return alarts;
 }
