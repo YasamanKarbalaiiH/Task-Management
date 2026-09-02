@@ -7,7 +7,11 @@
       "status": "ongoing",
       "progress": 85,
       "dueDate": "2026-09-24",
-      "assignees": ["1", "2", "3"]
+      "assignees": [
+        "1",
+        "2",
+        "3"
+      ]
     },
     {
       "id": "2",
@@ -16,7 +20,10 @@
       "status": "process",
       "progress": 72,
       "dueDate": "2026-09-26",
-      "assignees": ["2", "4"]
+      "assignees": [
+        "2",
+        "4"
+      ]
     },
     {
       "id": "3",
@@ -25,7 +32,10 @@
       "status": "complete",
       "progress": 100,
       "dueDate": "2026-09-28",
-      "assignees": ["1", "5"]
+      "assignees": [
+        "1",
+        "5"
+      ]
     },
     {
       "id": "4",
@@ -34,7 +44,9 @@
       "status": "ongoing",
       "progress": 64,
       "dueDate": "2026-09-30",
-      "assignees": ["3"]
+      "assignees": [
+        "3"
+      ]
     },
     {
       "id": "5",
@@ -43,10 +55,20 @@
       "status": "cancel",
       "progress": 20,
       "dueDate": "2026-10-01",
-      "assignees": ["4", "5"]
+      "assignees": [
+        "4",
+        "5"
+      ]
+    },
+    {
+      "title": "tyui",
+      "project": "rtty",
+      "status": "ongoing",
+      "progress": "34",
+      "dueDate": "2026-09-26",
+      "id": "KLKHR1cauQ4"
     }
   ],
-
   "users": [
     {
       "id": "1",
@@ -79,7 +101,6 @@
       "avatar": "https://i.pravatar.cc/150?img=68"
     }
   ],
-
   "messages": [
     {
       "id": "1",
@@ -103,7 +124,6 @@
       "time": "10:34 AM"
     }
   ],
-
   "notifications": [
     {
       "id": "1",
@@ -138,7 +158,6 @@
       "read": true
     }
   ],
-
   "events": [
     {
       "id": "1",
@@ -162,7 +181,6 @@
       "type": "meeting"
     }
   ],
-
   "summary": {
     "totalTasks": 57,
     "completed": 24,
@@ -170,7 +188,6 @@
     "cancelled": 7,
     "ongoing": 14
   },
-
   "profile": {
     "id": "1",
     "name": "Nasir Jamshed",
@@ -179,5 +196,6 @@
     "phone": "+123 456 7890",
     "location": "United States",
     "joined": "2026-01-20"
-  }
+  },
+  "$schema": "./node_modules/json-server/schema.json"
 }

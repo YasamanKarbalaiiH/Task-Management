@@ -6,9 +6,10 @@ import dateHeader from "../hooks/useDate";
 interface headerProps {
   title: string;
   showDate: boolean;
+  onCreateTask: () => void;
 }
 
-function Header({ title, showDate }: headerProps) {
+function Header({ title, showDate, onCreateTask }: headerProps) {
   return (
     <div>
       <div className="p-6 pb-0 flex  justify-between items-center flex-wrap">
@@ -26,7 +27,11 @@ function Header({ title, showDate }: headerProps) {
               <span className="font-bold text-sm hidden md:block">
                 Create Task
               </span>
-              <span className="bg-primary mt-2 md:mt-0 p-2 rounded-[100%]  font-bold text-white hover:bg-primary-dark">
+              <button
+                type="button"
+                onClick={onCreateTask}
+                className="bg-primary mt-2 md:mt-0 p-2 rounded-[100%] font-bold text-white hover:bg-primary-dark"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
@@ -40,7 +45,7 @@ function Header({ title, showDate }: headerProps) {
                     d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"
                   />
                 </svg>
-              </span>
+              </button>
             </div>
             <div>
               <div>
