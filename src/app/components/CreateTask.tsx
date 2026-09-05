@@ -32,8 +32,12 @@ const fields: Fields[] = [
     title: "dueDate",
     type: "date",
   },
+  {
+    id: "6",
+    title: "assignees",
+    type: "text",
+  },
 ];
-
 export default function CreateTask() {
   const {
     formData,
