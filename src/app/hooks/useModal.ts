@@ -1,7 +1,15 @@
 import { useState, ChangeEvent, FormEvent } from "react";
 import { Fields, FormData, createFormData } from "../types/taskFields";
 
-const API_URL = "http://localhost:8000/tasks";
+type User = {
+  id: string;
+  name: string;
+  role: string;
+  avatar: string;
+};
+
+const TASKS_API = "http://localhost:8000/tasks";
+const USERS_API = "http://localhost:8000/users";
 
 export function useModal(fields: Fields[]) {
   const [formData, setFormData] = useState<FormData>(createFormData(fields));
@@ -23,31 +31,70 @@ export function useModal(fields: Fields[]) {
     }));
   };
 
+  const handleSelectChange = (name: string, value: string) => {
+    setFormData((prev: FormData) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {
+      const usersRes = await fetch(USERS_API);
+
+      if (!usersRes.ok) {
+        throw new Error("Failed to fetch users");
+      }
+
+      const usersData: { users: User[] } = await usersRes.json();
+
+      const users = usersData.users;
+
+      const assignedNames = formData.assignees
+        .split(",")
+        .map((name) => name.trim())
+        .filter(Boolean);
+
+      const assigneeIds = assignedNames
+        .map((name) => {
+          const user = users.find(
+            (user) => user.name.toLowerCase() === name.toLowerCase(),
+          );
+
+          return user?.id;
+        })
+        .filter((id): id is string => id !== undefined);
+
+      const taskData = {
+        title: formData.title,
+        project: formData.project,
+        status: formData.status,
+        progress: Number(formData.progress),
+        dueDate: formData.dueDate,
+        assignees: assigneeIds,
+      };
+
       if (editingItem) {
-        // UPDATE
-        const res = await fetch(`${API_URL}/${editingItem.id}`, {
+        const res = await fetch(`${TASKS_API}/${editingItem.id}`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(formData),
+          body: JSON.stringify(taskData),
         });
 
         if (!res.ok) {
           throw new Error("Failed to update task");
         }
       } else {
-        // CREATE
-        const res = await fetch(API_URL, {
+        const res = await fetch(TASKS_API, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(formData),
+          body: JSON.stringify(taskData),
         });
 
         if (!res.ok) {
@@ -86,6 +133,7 @@ export function useModal(fields: Fields[]) {
     isModalOpen,
     editingItem,
     handleChange,
+    handleSelectChange,
     handleSubmit,
     openModal,
     closeModal,
