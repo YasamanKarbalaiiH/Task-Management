@@ -8,6 +8,7 @@ import TodayTasks from "./components/home/TodayTask";
 import AlartsCard from "./components/home/AlartsCard";
 import HomeCard from "./components/home/HomeCard";
 import CreateTask from "./components/CreateTask";
+
 export default async function Home() {
   const stats = await Status();
   const data = await Tasks();
@@ -15,22 +16,37 @@ export default async function Home() {
   const overview = await TaskChartData();
 
   return (
-    <div>
-      <CreateTask />
-
-      <div className="flex flex-col md:flex-row justify-between  md:gap-7">
-        <div className="pl-2 left-side w-auto md:w-2/3">
-          <div>
-            <HomeCard stats={stats} />
-            <TodayTasks data={data} />
-            <TaskChart tasks={overview} />
-          </div>
+    <main className="min-h-screen bg-background px-4 py-5 md:px-6 lg:px-8">
+      <div className="mx-auto max-w-[1600px]">
+        {/* Create Task */}
+        <div className="mb-6">
+          <CreateTask />
         </div>
-        <div className="right-side mr-5 w-auto md:w-1/3">
-          <TaskStatusPie tasks={overview} />
-          <AlartsCard data={alart} />
+
+        {/* Dashboard */}
+        <div className="grid grid-cols-1 gap-6 xl:grid-cols-3">
+          {/* Left Section */}
+          <section className="space-y-6 xl:col-span-2">
+            {/* Statistics */}
+            <HomeCard stats={stats} />
+
+            {/* Today's Tasks */}
+            <TodayTasks data={data} />
+
+            {/* Task Overview */}
+            <TaskChart tasks={overview} />
+          </section>
+
+          {/* Right Section */}
+          <aside className="space-y-6">
+            {/* Task Status */}
+            <TaskStatusPie tasks={overview} />
+
+            {/* Alerts */}
+            <AlartsCard data={alart} />
+          </aside>
         </div>
       </div>
-    </div>
+    </main>
   );
 }
