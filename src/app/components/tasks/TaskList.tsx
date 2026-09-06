@@ -31,7 +31,6 @@ interface PaginationProps {
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
-// Status style
 const statusStyles: Record<
   TaskStatus,
   {
@@ -60,7 +59,6 @@ const statusStyles: Record<
   },
 };
 
-// Status Badge
 function StatusBadge({ status }: { status: TaskStatus }) {
   const style = statusStyles[status];
 
@@ -79,8 +77,6 @@ function TaskList({ tasks }: TaskListProps) {
   const [statusFilter, setStatusFilter] = useState<TaskStatus | "all">("all");
   const tasksPerPage = 6;
 
-  // ================= SEARCH =================
-
   const filteredTasks = tasks.filter((task) => {
     const value = search.toLowerCase();
 
@@ -93,7 +89,6 @@ function TaskList({ tasks }: TaskListProps) {
 
     return matchesSearch && matchesStatus;
   });
-  // ================= PAGINATION =================
 
   const totalPages = Math.ceil(filteredTasks.length / tasksPerPage);
 
@@ -104,8 +99,6 @@ function TaskList({ tasks }: TaskListProps) {
     startIndex + tasksPerPage,
   );
 
-  // ================= SEARCH HANDLER =================
-
   const handleSearch = (value: string) => {
     setSearch(value);
     setCurrentPage(1);
@@ -113,15 +106,11 @@ function TaskList({ tasks }: TaskListProps) {
 
   return (
     <div className="w-full">
-      {/* ================= SEARCH ================= */}
-
       <div className="mx-auto my-10 flex w-[80%] flex-col gap-3 sm:flex-row">
-        {/* Search */}
         <div className="flex-1">
           <Search onSearch={handleSearch} />
         </div>
 
-        {/* Status Filter */}
         <select
           value={statusFilter}
           onChange={(e) => {
@@ -138,15 +127,9 @@ function TaskList({ tasks }: TaskListProps) {
         </select>
       </div>
 
-      {/* ================================================== */}
-      {/* ================= DESKTOP TABLE ================== */}
-      {/* ================================================== */}
-
       <div className="m-5 hidden overflow-hidden rounded-xl border border-border bg-white lg:block">
         <div className="overflow-x-auto">
           <table className="w-full min-w-212.5">
-            {/* Table Header */}
-
             <thead>
               <tr className="border-b border-border bg-primary-light">
                 <th className="px-5 py-4 text-left text-sm font-semibold text-text-primary">
@@ -171,8 +154,6 @@ function TaskList({ tasks }: TaskListProps) {
               </tr>
             </thead>
 
-            {/* Table Body */}
-
             <tbody>
               {currentTasks.length > 0 ? (
                 currentTasks.map((task) => (
@@ -180,23 +161,17 @@ function TaskList({ tasks }: TaskListProps) {
                     key={task.title}
                     className="border-b border-border last:border-b-0 hover:bg-background"
                   >
-                    {/* Task */}
-
                     <td className="px-5 py-4">
                       <p className="font-medium text-text-primary">
                         {task.title}
                       </p>
                     </td>
 
-                    {/* Project */}
-
                     <td className="px-5 py-4">
                       <span className="rounded-md bg-primary-light px-3 py-1 text-sm font-medium text-primary">
                         {task.project}
                       </span>
                     </td>
-
-                    {/* Assignees */}
 
                     <td className="px-5 py-4">
                       <div className="flex -space-x-2">
@@ -214,13 +189,9 @@ function TaskList({ tasks }: TaskListProps) {
                       </div>
                     </td>
 
-                    {/* Status */}
-
                     <td className="px-5 py-4">
                       <StatusBadge status={task.status} />
                     </td>
-
-                    {/* Due Date */}
 
                     <td className="px-5 py-4 text-sm text-text-secondary">
                       {task.dueDate}
@@ -241,8 +212,6 @@ function TaskList({ tasks }: TaskListProps) {
           </table>
         </div>
 
-        {/* Desktop Pagination */}
-
         {totalPages > 1 && (
           <Pagination
             currentPage={currentPage}
@@ -255,10 +224,6 @@ function TaskList({ tasks }: TaskListProps) {
         )}
       </div>
 
-      {/* ================================================== */}
-      {/* ============== MOBILE / TABLET CARDS ============= */}
-      {/* ================================================== */}
-
       <div className="space-y-4 p-5 lg:hidden">
         {currentTasks.length > 0 ? (
           currentTasks.map((task) => (
@@ -266,8 +231,6 @@ function TaskList({ tasks }: TaskListProps) {
               key={task.title}
               className="rounded-xl border border-border bg-white p-5 transition hover:shadow-sm"
             >
-              {/* Title + Project */}
-
               <div className="mb-5">
                 <div className="flex items-start justify-between gap-3">
                   <p className="font-semibold text-text-primary">
@@ -281,8 +244,6 @@ function TaskList({ tasks }: TaskListProps) {
                   {task.project}
                 </span>
               </div>
-
-              {/* Assignees */}
 
               <div className="mb-5">
                 <p className="mb-2 text-xs text-text-muted">Assignees</p>
@@ -302,8 +263,6 @@ function TaskList({ tasks }: TaskListProps) {
                 </div>
               </div>
 
-              {/* Due Date */}
-
               <div className="flex items-center justify-between border-t border-border pt-4">
                 <p className="text-xs text-text-muted">Due Date</p>
 
@@ -318,8 +277,6 @@ function TaskList({ tasks }: TaskListProps) {
             No tasks found
           </div>
         )}
-
-        {/* Mobile / Tablet Pagination */}
 
         {totalPages > 1 && (
           <Pagination
@@ -336,10 +293,6 @@ function TaskList({ tasks }: TaskListProps) {
   );
 }
 
-/* ================================================== */
-/* ================= PAGINATION ===================== */
-/* ================================================== */
-
 function Pagination({
   currentPage,
   totalPages,
@@ -350,8 +303,6 @@ function Pagination({
 }: PaginationProps) {
   return (
     <div className="flex flex-col gap-4 border-t border-border px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
-      {/* Showing */}
-
       <p className="text-center text-sm text-text-secondary sm:text-left">
         Showing{" "}
         <span className="font-medium text-text-primary">{startIndex + 1}</span>{" "}
@@ -362,11 +313,7 @@ function Pagination({
         of <span className="font-medium text-text-primary">{totalTasks}</span>
       </p>
 
-      {/* Buttons */}
-
       <div className="flex items-center justify-center gap-1">
-        {/* Previous */}
-
         <button
           onClick={() => setCurrentPage((page) => Math.max(page - 1, 1))}
           disabled={currentPage === 1}
@@ -374,8 +321,6 @@ function Pagination({
         >
           Previous
         </button>
-
-        {/* Page Numbers */}
 
         <div className="flex items-center gap-1">
           {Array.from({ length: totalPages }, (_, index) => index + 1).map(
@@ -394,8 +339,6 @@ function Pagination({
             ),
           )}
         </div>
-
-        {/* Next */}
 
         <button
           onClick={() =>
