@@ -25,7 +25,7 @@ function Sidebar() {
   const menuItems = [
     { name: "Home", path: "/", icon: Home },
     { name: "Task", path: "/tasks", icon: Task },
-    { name: "Chat", path: "/chat", icon: Chat },
+    { name: "Chat", path: "/chats", icon: Chat },
     { name: "Summary", path: "/summary", icon: Summary },
     { name: "Calendar", path: "/calendar", icon: Calendar },
     { name: "Notification", path: "/notifications", icon: Notif },
