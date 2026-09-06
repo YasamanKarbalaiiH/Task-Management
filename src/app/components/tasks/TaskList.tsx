@@ -1,0 +1,414 @@
+"use client";
+
+import { useState } from "react";
+import Search from "./Search";
+import Image from "next/image";
+
+type TaskStatus = "ongoing" | "process" | "complete" | "cancel";
+
+type Task = {
+  title: string;
+  status: TaskStatus;
+  dueDate: string;
+  project: string;
+  assignees: {
+    id: string;
+    name: string;
+    avatar: string;
+  }[];
+};
+
+interface TaskListProps {
+  tasks: Task[];
+}
+
+interface PaginationProps {
+  currentPage: number;
+  totalPages: number;
+  startIndex: number;
+  totalTasks: number;
+  tasksPerPage: number;
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
+}
+
+// Status style
+const statusStyles: Record<
+  TaskStatus,
+  {
+    label: string;
+    className: string;
+  }
+> = {
+  ongoing: {
+    label: "Ongoing",
+    className: "bg-purple-bg text-purple",
+  },
+
+  process: {
+    label: "Process",
+    className: "bg-yellow-bg text-yellow",
+  },
+
+  complete: {
+    label: "Complete",
+    className: "bg-green-bg text-green",
+  },
+
+  cancel: {
+    label: "Cancel",
+    className: "bg-red-bg text-red",
+  },
+};
+
+// Status Badge
+function StatusBadge({ status }: { status: TaskStatus }) {
+  const style = statusStyles[status];
+
+  return (
+    <span
+      className={`inline-flex rounded-md px-3 py-1 text-sm font-medium ${style.className}`}
+    >
+      {style.label}
+    </span>
+  );
+}
+
+function TaskList({ tasks }: TaskListProps) {
+  const [search, setSearch] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [statusFilter, setStatusFilter] = useState<TaskStatus | "all">("all");
+  const tasksPerPage = 6;
+
+  // ================= SEARCH =================
+
+  const filteredTasks = tasks.filter((task) => {
+    const value = search.toLowerCase();
+
+    const matchesSearch =
+      task.title.toLowerCase().includes(value) ||
+      task.project.toLowerCase().includes(value);
+
+    const matchesStatus =
+      statusFilter === "all" || task.status === statusFilter;
+
+    return matchesSearch && matchesStatus;
+  });
+  // ================= PAGINATION =================
+
+  const totalPages = Math.ceil(filteredTasks.length / tasksPerPage);
+
+  const startIndex = (currentPage - 1) * tasksPerPage;
+
+  const currentTasks = filteredTasks.slice(
+    startIndex,
+    startIndex + tasksPerPage,
+  );
+
+  // ================= SEARCH HANDLER =================
+
+  const handleSearch = (value: string) => {
+    setSearch(value);
+    setCurrentPage(1);
+  };
+
+  return (
+    <div className="w-full">
+      {/* ================= SEARCH ================= */}
+
+      <div className="mx-auto my-10 flex w-[80%] flex-col gap-3 sm:flex-row">
+        {/* Search */}
+        <div className="flex-1">
+          <Search onSearch={handleSearch} />
+        </div>
+
+        {/* Status Filter */}
+        <select
+          value={statusFilter}
+          onChange={(e) => {
+            setStatusFilter(e.target.value as TaskStatus | "all");
+            setCurrentPage(1);
+          }}
+          className="h-10 w-full rounded-lg border border-border bg-white px-3 text-sm text-text-primary outline-none transition focus:border-primary sm:w-40"
+        >
+          <option value="all">All Status</option>
+          <option value="ongoing">Ongoing</option>
+          <option value="process">Process</option>
+          <option value="complete">Complete</option>
+          <option value="cancel">Cancel</option>
+        </select>
+      </div>
+
+      {/* ================================================== */}
+      {/* ================= DESKTOP TABLE ================== */}
+      {/* ================================================== */}
+
+      <div className="m-5 hidden overflow-hidden rounded-xl border border-border bg-white lg:block">
+        <div className="overflow-x-auto">
+          <table className="w-full min-w-212.5">
+            {/* Table Header */}
+
+            <thead>
+              <tr className="border-b border-border bg-primary-light">
+                <th className="px-5 py-4 text-left text-sm font-semibold text-text-primary">
+                  Task
+                </th>
+
+                <th className="px-5 py-4 text-left text-sm font-semibold text-text-primary">
+                  Project
+                </th>
+
+                <th className="px-5 py-4 text-left text-sm font-semibold text-text-primary">
+                  Assignees
+                </th>
+
+                <th className="px-5 py-4 text-left text-sm font-semibold text-text-primary">
+                  Status
+                </th>
+
+                <th className="px-5 py-4 text-left text-sm font-semibold text-text-primary">
+                  Due Date
+                </th>
+              </tr>
+            </thead>
+
+            {/* Table Body */}
+
+            <tbody>
+              {currentTasks.length > 0 ? (
+                currentTasks.map((task) => (
+                  <tr
+                    key={task.title}
+                    className="border-b border-border last:border-b-0 hover:bg-background"
+                  >
+                    {/* Task */}
+
+                    <td className="px-5 py-4">
+                      <p className="font-medium text-text-primary">
+                        {task.title}
+                      </p>
+                    </td>
+
+                    {/* Project */}
+
+                    <td className="px-5 py-4">
+                      <span className="rounded-md bg-primary-light px-3 py-1 text-sm font-medium text-primary">
+                        {task.project}
+                      </span>
+                    </td>
+
+                    {/* Assignees */}
+
+                    <td className="px-5 py-4">
+                      <div className="flex -space-x-2">
+                        {task.assignees.map((user) => (
+                          <Image
+                            width={100}
+                            height={100}
+                            key={user.id}
+                            src={user.avatar}
+                            alt={user.name}
+                            title={user.name}
+                            className="h-8 w-8 rounded-full border-2 border-white object-cover"
+                          />
+                        ))}
+                      </div>
+                    </td>
+
+                    {/* Status */}
+
+                    <td className="px-5 py-4">
+                      <StatusBadge status={task.status} />
+                    </td>
+
+                    {/* Due Date */}
+
+                    <td className="px-5 py-4 text-sm text-text-secondary">
+                      {task.dueDate}
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td
+                    colSpan={5}
+                    className="px-5 py-10 text-center text-sm text-text-muted"
+                  >
+                    No tasks found
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+
+        {/* Desktop Pagination */}
+
+        {totalPages > 1 && (
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            startIndex={startIndex}
+            totalTasks={filteredTasks.length}
+            tasksPerPage={tasksPerPage}
+            setCurrentPage={setCurrentPage}
+          />
+        )}
+      </div>
+
+      {/* ================================================== */}
+      {/* ============== MOBILE / TABLET CARDS ============= */}
+      {/* ================================================== */}
+
+      <div className="space-y-4 p-5 lg:hidden">
+        {currentTasks.length > 0 ? (
+          currentTasks.map((task) => (
+            <div
+              key={task.title}
+              className="rounded-xl border border-border bg-white p-5 transition hover:shadow-sm"
+            >
+              {/* Title + Project */}
+
+              <div className="mb-5">
+                <div className="flex items-start justify-between gap-3">
+                  <p className="font-semibold text-text-primary">
+                    {task.title}
+                  </p>
+
+                  <StatusBadge status={task.status} />
+                </div>
+
+                <span className="mt-2 inline-block rounded-md bg-primary-light px-3 py-1 text-xs font-medium text-primary">
+                  {task.project}
+                </span>
+              </div>
+
+              {/* Assignees */}
+
+              <div className="mb-5">
+                <p className="mb-2 text-xs text-text-muted">Assignees</p>
+
+                <div className="flex -space-x-2">
+                  {task.assignees.map((user) => (
+                    <Image
+                      width={100}
+                      height={100}
+                      key={user.id}
+                      src={user.avatar}
+                      alt={user.name}
+                      title={user.name}
+                      className="h-8 w-8 rounded-full border-2 border-white object-cover"
+                    />
+                  ))}
+                </div>
+              </div>
+
+              {/* Due Date */}
+
+              <div className="flex items-center justify-between border-t border-border pt-4">
+                <p className="text-xs text-text-muted">Due Date</p>
+
+                <p className="text-sm font-medium text-text-secondary">
+                  {task.dueDate}
+                </p>
+              </div>
+            </div>
+          ))
+        ) : (
+          <div className="rounded-xl border border-border bg-white px-5 py-10 text-center text-sm text-text-muted">
+            No tasks found
+          </div>
+        )}
+
+        {/* Mobile / Tablet Pagination */}
+
+        {totalPages > 1 && (
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            startIndex={startIndex}
+            totalTasks={filteredTasks.length}
+            tasksPerPage={tasksPerPage}
+            setCurrentPage={setCurrentPage}
+          />
+        )}
+      </div>
+    </div>
+  );
+}
+
+/* ================================================== */
+/* ================= PAGINATION ===================== */
+/* ================================================== */
+
+function Pagination({
+  currentPage,
+  totalPages,
+  startIndex,
+  totalTasks,
+  tasksPerPage,
+  setCurrentPage,
+}: PaginationProps) {
+  return (
+    <div className="flex flex-col gap-4 border-t border-border px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
+      {/* Showing */}
+
+      <p className="text-center text-sm text-text-secondary sm:text-left">
+        Showing{" "}
+        <span className="font-medium text-text-primary">{startIndex + 1}</span>{" "}
+        -{" "}
+        <span className="font-medium text-text-primary">
+          {Math.min(startIndex + tasksPerPage, totalTasks)}
+        </span>{" "}
+        of <span className="font-medium text-text-primary">{totalTasks}</span>
+      </p>
+
+      {/* Buttons */}
+
+      <div className="flex items-center justify-center gap-1">
+        {/* Previous */}
+
+        <button
+          onClick={() => setCurrentPage((page) => Math.max(page - 1, 1))}
+          disabled={currentPage === 1}
+          className="rounded-lg border border-border px-3 py-2 text-sm text-text-secondary transition hover:bg-primary-light hover:text-primary disabled:cursor-not-allowed disabled:opacity-40"
+        >
+          Previous
+        </button>
+
+        {/* Page Numbers */}
+
+        <div className="flex items-center gap-1">
+          {Array.from({ length: totalPages }, (_, index) => index + 1).map(
+            (page) => (
+              <button
+                key={page}
+                onClick={() => setCurrentPage(page)}
+                className={`h-9 w-9 rounded-lg text-sm font-medium transition ${
+                  currentPage === page
+                    ? "bg-primary text-white"
+                    : "text-text-secondary hover:bg-primary-light hover:text-primary"
+                }`}
+              >
+                {page}
+              </button>
+            ),
+          )}
+        </div>
+
+        {/* Next */}
+
+        <button
+          onClick={() =>
+            setCurrentPage((page) => Math.min(page + 1, totalPages))
+          }
+          disabled={currentPage === totalPages}
+          className="rounded-lg border border-border px-3 py-2 text-sm text-text-secondary transition hover:bg-primary-light hover:text-primary disabled:cursor-not-allowed disabled:opacity-40"
+        >
+          Next
+        </button>
+      </div>
+    </div>
+  );
+}
+
+export default TaskList;
