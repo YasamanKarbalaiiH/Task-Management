@@ -99,6 +99,41 @@
       "senderId": "1",
       "text": "Can we schedule a meeting?",
       "time": "10:34 AM"
+    },
+    {
+      "id": "QfrhGqrNoTw",
+      "conversationId": "1",
+      "senderId": "1",
+      "text": "ok",
+      "time": "06:34 PM"
+    },
+    {
+      "id": "51Mj2qYx12E",
+      "conversationId": "1788707276261",
+      "senderId": "1",
+      "text": "hey",
+      "time": "06:37 PM"
+    },
+    {
+      "id": "g7eGrycIwpQ",
+      "conversationId": "1788707315412",
+      "senderId": "1",
+      "text": "hey",
+      "time": "06:38 PM"
+    },
+    {
+      "id": "9E4lq3LFawk",
+      "conversationId": "2",
+      "senderId": "1",
+      "text": "hey",
+      "time": "06:47 PM"
+    },
+    {
+      "id": "XzJH3mnn_y4",
+      "conversationId": "4",
+      "senderId": "1",
+      "text": "hey",
+      "time": "06:54 PM"
     }
   ],
   "notifications": [
@@ -165,6 +200,24 @@
     "cancelled": 7,
     "ongoing": 14
   },
+  "conversations": [
+    {
+      "id": "1",
+      "participants": ["1", "2"]
+    },
+    {
+      "id": "2",
+      "participants": ["1", "3"]
+    },
+    {
+      "id": "3",
+      "participants": ["1", "4"]
+    },
+    {
+      "id": "4",
+      "participants": ["1", "5"]
+    }
+  ],
   "profile": {
     "id": "1",
     "name": "Nasir Jamshed",
