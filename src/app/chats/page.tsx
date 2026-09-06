@@ -1,3 +1,4 @@
+import Chat from "../components/chats/Chat";
 import CreateTask from "../components/CreateTask";
 
 async function Page() {
@@ -8,7 +9,9 @@ async function Page() {
           <CreateTask title="Chats" />
         </div>
 
-        <section></section>
+        <section>
+          <Chat />
+        </section>
       </div>
     </main>
   );
