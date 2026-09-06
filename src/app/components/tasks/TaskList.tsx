@@ -31,7 +31,8 @@ interface PaginationProps {
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
-// Status style
+/* ================= STATUS STYLES ================= */
+
 const statusStyles: Record<
   TaskStatus,
   {
@@ -60,26 +61,30 @@ const statusStyles: Record<
   },
 };
 
-// Status Badge
+/* ================= STATUS BADGE ================= */
+
 function StatusBadge({ status }: { status: TaskStatus }) {
   const style = statusStyles[status];
 
   return (
     <span
-      className={`inline-flex rounded-md px-3 py-1 text-sm font-medium ${style.className}`}
+      className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${style.className}`}
     >
       {style.label}
     </span>
   );
 }
 
+/* ================= TASK LIST ================= */
+
 function TaskList({ tasks }: TaskListProps) {
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [statusFilter, setStatusFilter] = useState<TaskStatus | "all">("all");
+
   const tasksPerPage = 6;
 
-  // ================= SEARCH =================
+  /* ================= SEARCH ================= */
 
   const filteredTasks = tasks.filter((task) => {
     const value = search.toLowerCase();
@@ -93,7 +98,8 @@ function TaskList({ tasks }: TaskListProps) {
 
     return matchesSearch && matchesStatus;
   });
-  // ================= PAGINATION =================
+
+  /* ================= PAGINATION ================= */
 
   const totalPages = Math.ceil(filteredTasks.length / tasksPerPage);
 
@@ -104,7 +110,7 @@ function TaskList({ tasks }: TaskListProps) {
     startIndex + tasksPerPage,
   );
 
-  // ================= SEARCH HANDLER =================
+  /* ================= SEARCH HANDLER ================= */
 
   const handleSearch = (value: string) => {
     setSearch(value);
@@ -112,23 +118,21 @@ function TaskList({ tasks }: TaskListProps) {
   };
 
   return (
-    <div className="w-full">
-      {/* ================= SEARCH ================= */}
+    <section className="w-full">
+      {/* ================= SEARCH & FILTER ================= */}
 
-      <div className="mx-auto my-10 flex w-[80%] flex-col gap-3 sm:flex-row">
-        {/* Search */}
-        <div className="flex-1">
+      <div className="mb-6 flex w-full flex-col gap-3 sm:flex-row">
+        <div className="min-w-0 flex-1">
           <Search onSearch={handleSearch} />
         </div>
 
-        {/* Status Filter */}
         <select
           value={statusFilter}
           onChange={(e) => {
             setStatusFilter(e.target.value as TaskStatus | "all");
             setCurrentPage(1);
           }}
-          className="h-10 w-full rounded-lg border border-border bg-white px-3 text-sm text-text-primary outline-none transition focus:border-primary sm:w-40"
+          className="h-11 w-full cursor-pointer rounded-xl border border-border bg-white px-4 text-sm font-medium text-text-primary outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/10 sm:w-44"
         >
           <option value="all">All Status</option>
           <option value="ongoing">Ongoing</option>
@@ -138,72 +142,66 @@ function TaskList({ tasks }: TaskListProps) {
         </select>
       </div>
 
-      {/* ================================================== */}
-      {/* ================= DESKTOP TABLE ================== */}
-      {/* ================================================== */}
+      {/* ================= DESKTOP TABLE ================= */}
 
-      <div className="m-5 hidden overflow-hidden rounded-xl border border-border bg-white lg:block">
+      <div className="hidden overflow-hidden rounded-2xl border border-border bg-white shadow-sm lg:block">
         <div className="overflow-x-auto">
           <table className="w-full min-w-212.5">
-            {/* Table Header */}
-
             <thead>
               <tr className="border-b border-border bg-primary-light">
-                <th className="px-5 py-4 text-left text-sm font-semibold text-text-primary">
+                <th className="px-6 py-4 text-left text-xs font-bold uppercase tracking-wide text-text-primary">
                   Task
                 </th>
 
-                <th className="px-5 py-4 text-left text-sm font-semibold text-text-primary">
+                <th className="px-6 py-4 text-left text-xs font-bold uppercase tracking-wide text-text-primary">
                   Project
                 </th>
 
-                <th className="px-5 py-4 text-left text-sm font-semibold text-text-primary">
+                <th className="px-6 py-4 text-left text-xs font-bold uppercase tracking-wide text-text-primary">
                   Assignees
                 </th>
 
-                <th className="px-5 py-4 text-left text-sm font-semibold text-text-primary">
+                <th className="px-6 py-4 text-left text-xs font-bold uppercase tracking-wide text-text-primary">
                   Status
                 </th>
 
-                <th className="px-5 py-4 text-left text-sm font-semibold text-text-primary">
+                <th className="px-6 py-4 text-left text-xs font-bold uppercase tracking-wide text-text-primary">
                   Due Date
                 </th>
               </tr>
             </thead>
-
-            {/* Table Body */}
 
             <tbody>
               {currentTasks.length > 0 ? (
                 currentTasks.map((task) => (
                   <tr
                     key={task.title}
-                    className="border-b border-border last:border-b-0 hover:bg-background"
+                    className="border-b border-border last:border-b-0 transition-colors hover:bg-background"
                   >
                     {/* Task */}
 
-                    <td className="px-5 py-4">
-                      <p className="font-medium text-text-primary">
+                    <td className="px-6 py-5">
+                      <p className="max-w-65 truncate text-sm font-semibold text-text-primary">
                         {task.title}
                       </p>
                     </td>
 
                     {/* Project */}
 
-                    <td className="px-5 py-4">
-                      <span className="rounded-md bg-primary-light px-3 py-1 text-sm font-medium text-primary">
+                    <td className="px-6 py-5">
+                      <span className="inline-flex rounded-full bg-primary-light px-3 py-1 text-xs font-semibold text-primary">
                         {task.project}
                       </span>
                     </td>
 
                     {/* Assignees */}
 
-                    <td className="px-5 py-4">
+                    <td className="px-6 py-5">
                       <div className="flex -space-x-2">
                         {task.assignees.map((user) => (
                           <Image
-                            width={100}
-                            height={100}
+                            width={32}
+                            height={32}
                             key={user.id}
                             src={user.avatar}
                             alt={user.name}
@@ -216,14 +214,16 @@ function TaskList({ tasks }: TaskListProps) {
 
                     {/* Status */}
 
-                    <td className="px-5 py-4">
+                    <td className="px-6 py-5">
                       <StatusBadge status={task.status} />
                     </td>
 
                     {/* Due Date */}
 
-                    <td className="px-5 py-4 text-sm text-text-secondary">
-                      {task.dueDate}
+                    <td className="px-6 py-5">
+                      <span className="text-sm font-medium text-text-secondary">
+                        {task.dueDate}
+                      </span>
                     </td>
                   </tr>
                 ))
@@ -231,7 +231,7 @@ function TaskList({ tasks }: TaskListProps) {
                 <tr>
                   <td
                     colSpan={5}
-                    className="px-5 py-10 text-center text-sm text-text-muted"
+                    className="px-6 py-14 text-center text-sm text-text-muted"
                   >
                     No tasks found
                   </td>
@@ -255,29 +255,27 @@ function TaskList({ tasks }: TaskListProps) {
         )}
       </div>
 
-      {/* ================================================== */}
-      {/* ============== MOBILE / TABLET CARDS ============= */}
-      {/* ================================================== */}
+      {/* ================= MOBILE / TABLET ================= */}
 
-      <div className="space-y-4 p-5 lg:hidden">
+      <div className="space-y-4 lg:hidden">
         {currentTasks.length > 0 ? (
           currentTasks.map((task) => (
-            <div
+            <article
               key={task.title}
-              className="rounded-xl border border-border bg-white p-5 transition hover:shadow-sm"
+              className="rounded-2xl border border-border bg-white p-5 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md"
             >
-              {/* Title + Project */}
+              {/* Title + Status */}
 
               <div className="mb-5">
                 <div className="flex items-start justify-between gap-3">
-                  <p className="font-semibold text-text-primary">
+                  <p className="min-w-0 text-sm font-bold text-text-primary">
                     {task.title}
                   </p>
 
                   <StatusBadge status={task.status} />
                 </div>
 
-                <span className="mt-2 inline-block rounded-md bg-primary-light px-3 py-1 text-xs font-medium text-primary">
+                <span className="mt-3 inline-flex rounded-full bg-primary-light px-3 py-1 text-xs font-semibold text-primary">
                   {task.project}
                 </span>
               </div>
@@ -285,13 +283,15 @@ function TaskList({ tasks }: TaskListProps) {
               {/* Assignees */}
 
               <div className="mb-5">
-                <p className="mb-2 text-xs text-text-muted">Assignees</p>
+                <p className="mb-2 text-xs font-medium text-text-muted">
+                  Assignees
+                </p>
 
                 <div className="flex -space-x-2">
                   {task.assignees.map((user) => (
                     <Image
-                      width={100}
-                      height={100}
+                      width={32}
+                      height={32}
                       key={user.id}
                       src={user.avatar}
                       alt={user.name}
@@ -305,16 +305,16 @@ function TaskList({ tasks }: TaskListProps) {
               {/* Due Date */}
 
               <div className="flex items-center justify-between border-t border-border pt-4">
-                <p className="text-xs text-text-muted">Due Date</p>
+                <p className="text-xs font-medium text-text-muted">Due Date</p>
 
-                <p className="text-sm font-medium text-text-secondary">
+                <p className="text-sm font-semibold text-text-secondary">
                   {task.dueDate}
                 </p>
               </div>
-            </div>
+            </article>
           ))
         ) : (
-          <div className="rounded-xl border border-border bg-white px-5 py-10 text-center text-sm text-text-muted">
+          <div className="rounded-2xl border border-border bg-white px-5 py-12 text-center text-sm text-text-muted shadow-sm">
             No tasks found
           </div>
         )}
@@ -332,13 +332,11 @@ function TaskList({ tasks }: TaskListProps) {
           />
         )}
       </div>
-    </div>
+    </section>
   );
 }
 
-/* ================================================== */
-/* ================= PAGINATION ===================== */
-/* ================================================== */
+/* ================= PAGINATION ================= */
 
 function Pagination({
   currentPage,
@@ -354,12 +352,14 @@ function Pagination({
 
       <p className="text-center text-sm text-text-secondary sm:text-left">
         Showing{" "}
-        <span className="font-medium text-text-primary">{startIndex + 1}</span>{" "}
+        <span className="font-semibold text-text-primary">
+          {startIndex + 1}
+        </span>{" "}
         -{" "}
-        <span className="font-medium text-text-primary">
+        <span className="font-semibold text-text-primary">
           {Math.min(startIndex + tasksPerPage, totalTasks)}
         </span>{" "}
-        of <span className="font-medium text-text-primary">{totalTasks}</span>
+        of <span className="font-semibold text-text-primary">{totalTasks}</span>
       </p>
 
       {/* Buttons */}
@@ -368,9 +368,10 @@ function Pagination({
         {/* Previous */}
 
         <button
+          type="button"
           onClick={() => setCurrentPage((page) => Math.max(page - 1, 1))}
           disabled={currentPage === 1}
-          className="rounded-lg border border-border px-3 py-2 text-sm text-text-secondary transition hover:bg-primary-light hover:text-primary disabled:cursor-not-allowed disabled:opacity-40"
+          className="rounded-lg border border-border px-3 py-2 text-sm font-medium text-text-secondary transition-colors hover:bg-primary-light hover:text-primary disabled:cursor-not-allowed disabled:opacity-40"
         >
           Previous
         </button>
@@ -381,9 +382,10 @@ function Pagination({
           {Array.from({ length: totalPages }, (_, index) => index + 1).map(
             (page) => (
               <button
+                type="button"
                 key={page}
                 onClick={() => setCurrentPage(page)}
-                className={`h-9 w-9 rounded-lg text-sm font-medium transition ${
+                className={`h-9 w-9 rounded-lg text-sm font-semibold transition-colors ${
                   currentPage === page
                     ? "bg-primary text-white"
                     : "text-text-secondary hover:bg-primary-light hover:text-primary"
@@ -398,11 +400,12 @@ function Pagination({
         {/* Next */}
 
         <button
+          type="button"
           onClick={() =>
             setCurrentPage((page) => Math.min(page + 1, totalPages))
           }
           disabled={currentPage === totalPages}
-          className="rounded-lg border border-border px-3 py-2 text-sm text-text-secondary transition hover:bg-primary-light hover:text-primary disabled:cursor-not-allowed disabled:opacity-40"
+          className="rounded-lg border border-border px-3 py-2 text-sm font-medium text-text-secondary transition-colors hover:bg-primary-light hover:text-primary disabled:cursor-not-allowed disabled:opacity-40"
         >
           Next
         </button>
