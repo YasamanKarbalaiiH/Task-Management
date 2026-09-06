@@ -1,9 +1,9 @@
-import Header from "../components/Header";
+import CreateTask from "../components/CreateTask";
 
 function page() {
   return (
     <div>
-      <Header title="Tasks" showDate={false} />
+      <CreateTask title="Tasks" />
     </div>
   );
 }

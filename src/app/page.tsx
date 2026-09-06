@@ -20,7 +20,7 @@ export default async function Home() {
       <div className="mx-auto max-w-[1600px]">
         {/* Create Task */}
         <div className="mb-6">
-          <CreateTask />
+          <CreateTask title="Dashboard" />
         </div>
 
         {/* Dashboard */}
