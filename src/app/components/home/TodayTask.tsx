@@ -9,7 +9,7 @@ interface Task {
   dueDate: string;
   project: string;
   assignees: {
-    id: number;
+    id: string;
     name: string;
     avatar: string;
   }[];
