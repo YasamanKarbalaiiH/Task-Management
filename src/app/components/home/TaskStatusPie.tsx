@@ -31,14 +31,15 @@ const statusLabels = {
 };
 
 const COLORS = {
-  ongoing: " #6756d6",
-  complete: " #63b9df",
+  ongoing: "#6756d6",
+  complete: "#63b9df",
   process: "#e8bd63",
   cancel: "#e86f91",
 };
 
 export default function TaskStatusPie({ tasks }: TaskStatusPieProps) {
   const totalTasks = tasks.length;
+
   const renderLabel = ({
     cx,
     cy,
@@ -64,7 +65,6 @@ export default function TaskStatusPie({ tasks }: TaskStatusPieProps) {
       (Number(outerRadius) + 20) * Math.sin(-Number(midAngle) * RADIAN);
 
     const isRight = lineX >= Number(cx);
-
     const endX = lineX + (isRight ? 8 : -8);
 
     const percentage = `${(Number(percent) * 100).toFixed(0)}%`;
@@ -105,6 +105,7 @@ export default function TaskStatusPie({ tasks }: TaskStatusPieProps) {
       </g>
     );
   };
+
   const statusData = [
     {
       name: statusLabels.ongoing,
@@ -129,10 +130,10 @@ export default function TaskStatusPie({ tasks }: TaskStatusPieProps) {
   ];
 
   return (
-    <div className="w-full rounded-xl bg-white p-6 shadow-sm mt-6">
-      <h2 className="text-xl font-bold text-gray-900">Summary</h2>
+    <section className="w-full rounded-2xl bg-white p-4 shadow-sm sm:p-5 lg:p-6">
+      <h2 className="text-lg font-bold text-gray-800 sm:text-xl">Summary</h2>
 
-      <div className="relative mt-4 h-72 w-full">
+      <div className="relative mt-4 h-62.5 w-full sm:h-70">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
             <Pie
@@ -141,8 +142,8 @@ export default function TaskStatusPie({ tasks }: TaskStatusPieProps) {
               nameKey="name"
               cx="50%"
               cy="50%"
-              innerRadius={70}
-              outerRadius={80}
+              innerRadius={58}
+              outerRadius={72}
               paddingAngle={3}
               stroke="none"
               label={renderLabel}
@@ -170,28 +171,20 @@ export default function TaskStatusPie({ tasks }: TaskStatusPieProps) {
         </ResponsiveContainer>
       </div>
 
-      {/* Legend */}
-      <div className="mt-4 grid grid-cols-2 gap-4">
-        {statusData.map((item) => {
-          return (
-            <div
-              key={item.status}
-              className="flex items-center justify-between"
-            >
-              <div className="flex items-center gap-2">
-                <span
-                  className="h-3 w-3 rounded-sm"
-                  style={{
-                    backgroundColor: COLORS[item.status as keyof typeof COLORS],
-                  }}
-                />
+      <div className="mt-3 grid grid-cols-2 gap-x-4 gap-y-3">
+        {statusData.map((item) => (
+          <div key={item.status} className="flex min-w-0 items-center gap-2">
+            <span
+              className="h-3 w-3 shrink-0 rounded-sm"
+              style={{
+                backgroundColor: COLORS[item.status as keyof typeof COLORS],
+              }}
+            />
 
-                <span className="text-sm text-gray-600">{item.name}</span>
-              </div>
-            </div>
-          );
-        })}
+            <span className="truncate text-sm text-gray-600">{item.name}</span>
+          </div>
+        ))}
       </div>
-    </div>
+    </section>
   );
 }

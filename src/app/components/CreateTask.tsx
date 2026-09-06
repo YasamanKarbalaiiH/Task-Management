@@ -38,6 +38,7 @@ const fields: Fields[] = [
     type: "text",
   },
 ];
+
 export default function CreateTask() {
   const {
     formData,

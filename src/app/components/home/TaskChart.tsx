@@ -1,7 +1,6 @@
 "use client";
 
 import { useMemo, useState } from "react";
-
 import {
   BarChart,
   Bar,
@@ -42,7 +41,6 @@ const getDateKey = (date: Date) => {
 const getWeekStart = (date: Date) => {
   const result = new Date(date);
   const day = result.getDay();
-
   const difference = day === 0 ? -6 : 1 - day;
 
   result.setDate(result.getDate() + difference);
@@ -60,10 +58,9 @@ const formatWeekDay = (date: Date) => {
 // Format weekly date range
 const formatWeekRange = (dateString: string) => {
   const selected = new Date(`${dateString}T00:00:00`);
-
   const weekStart = getWeekStart(selected);
-
   const weekEnd = new Date(weekStart);
+
   weekEnd.setDate(weekStart.getDate() + 6);
 
   return `${weekStart.getDate()} - ${weekEnd.getDate()}`;
@@ -81,7 +78,6 @@ const formatMonth = (dateString: string) => {
 
 export default function TaskChart({ tasks }: TaskChartProps) {
   const [viewMode, setViewMode] = useState<ViewMode>("weekly");
-
   const [selectedDate, setSelectedDate] = useState("2026-09-01");
 
   const chartData = useMemo(() => {
@@ -98,7 +94,6 @@ export default function TaskChart({ tasks }: TaskChartProps) {
 
     if (viewMode === "weekly") {
       const selected = new Date(`${selectedDate}T00:00:00`);
-
       const weekStart = getWeekStart(selected);
 
       for (let i = 0; i < 7; i++) {
@@ -131,16 +126,12 @@ export default function TaskChart({ tasks }: TaskChartProps) {
 
     if (viewMode === "monthly") {
       const selected = new Date(`${selectedDate}T00:00:00`);
-
       const year = selected.getFullYear();
-
       const month = selected.getMonth();
-
       const daysInMonth = new Date(year, month + 1, 0).getDate();
 
       for (let day = 1; day <= daysInMonth; day++) {
         const currentDate = new Date(year, month, day);
-
         const dateKey = getDateKey(currentDate);
 
         const complete = tasks.filter(
@@ -164,16 +155,17 @@ export default function TaskChart({ tasks }: TaskChartProps) {
   }, [tasks, selectedDate, viewMode]);
 
   return (
-    <div className="mt-8 w-full rounded-2xl bg-white p-6 shadow-sm">
+    <section className="mt-2 w-full rounded-2xl bg-white p-4 shadow-sm sm:p-5 lg:p-6">
       {/* Header */}
-      <div className="mb-6 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+      <div className="mb-6 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
         {/* Title + Date */}
-        <div className="flex items-center gap-4">
-          <h2 className="text-xl font-bold text-gray-900">Overview</h2>
+        <div className="flex items-center justify-between gap-4 sm:justify-start">
+          <h2 className="text-lg font-bold text-gray-800 sm:text-xl">
+            Overview
+          </h2>
 
           {/* Date Picker */}
           <div className="relative">
-            {/* Visible Date */}
             <button
               type="button"
               onClick={() => {
@@ -183,7 +175,7 @@ export default function TaskChart({ tasks }: TaskChartProps) {
 
                 input?.showPicker();
               }}
-              className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-700 transition hover:bg-gray-50"
+              className="flex items-center gap-2 rounded-lg px-2 py-2 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-50 hover:text-gray-800"
             >
               <span>
                 {viewMode === "weekly"
@@ -232,11 +224,13 @@ export default function TaskChart({ tasks }: TaskChartProps) {
         </div>
 
         {/* Weekly / Monthly */}
-        <div className="flex p-1">
+        <div className="flex w-fit rounded-lg bg-gray-50 p-1">
           <button
             onClick={() => setViewMode("weekly")}
-            className={`rounded-md px-4 py-2 text-sm font-medium transition ${
-              viewMode === "weekly" ? "text-primary" : "text-secondary"
+            className={`rounded-md px-4 py-2 text-sm font-medium transition-all ${
+              viewMode === "weekly"
+                ? "bg-white text-primary shadow-sm"
+                : "text-secondary hover:text-gray-800"
             }`}
           >
             Weekly
@@ -244,8 +238,10 @@ export default function TaskChart({ tasks }: TaskChartProps) {
 
           <button
             onClick={() => setViewMode("monthly")}
-            className={`rounded-md px-4 py-2 text-sm font-medium transition ${
-              viewMode === "monthly" ? "text-primary" : "text-secondary"
+            className={`rounded-md px-4 py-2 text-sm font-medium transition-all ${
+              viewMode === "monthly"
+                ? "bg-white text-primary shadow-sm"
+                : "text-secondary hover:text-gray-800"
             }`}
           >
             Monthly
@@ -254,14 +250,14 @@ export default function TaskChart({ tasks }: TaskChartProps) {
       </div>
 
       {/* Chart */}
-      <div className="h-87.5 w-full">
+      <div className="h-75 w-full sm:h-85 lg:h-87.5">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
             data={chartData}
             margin={{
               top: 10,
               right: 10,
-              left: 0,
+              left: -10,
               bottom: 10,
             }}
           >
@@ -290,16 +286,14 @@ export default function TaskChart({ tasks }: TaskChartProps) {
             <Legend
               align="left"
               content={() => (
-                <div className="mt-3 mb-4 flex gap-5">
+                <div className="mt-3 flex flex-wrap gap-5">
                   <div className="flex items-center gap-2">
-                    <span className="h-4 w-4 rounded-md bg-blue" />
-
+                    <span className="h-3 w-3 rounded-md bg-blue" />
                     <span className="text-sm text-gray-600">Complete</span>
                   </div>
 
                   <div className="flex items-center gap-2">
-                    <span className="h-4 w-4 rounded-md bg-purple" />
-
+                    <span className="h-3 w-3 rounded-md bg-purple" />
                     <span className="text-sm text-gray-600">Ongoing</span>
                   </div>
                 </div>
@@ -326,6 +320,6 @@ export default function TaskChart({ tasks }: TaskChartProps) {
           </BarChart>
         </ResponsiveContainer>
       </div>
-    </div>
+    </section>
   );
 }

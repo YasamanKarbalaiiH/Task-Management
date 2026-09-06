@@ -13,29 +13,44 @@ export default function Modal({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex justify-center items-center z-50">
-      <div className="bg-white  rounded-xl p-6 w-[90%] max-w-md relative">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm">
+      <div className="relative max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-2xl bg-white p-5 shadow-2xl sm:p-6">
+        {/* Close button */}
         <button
           onClick={onClose}
-          className="absolute top-3 right-3 text-xl"
           type="button"
+          aria-label="Close modal"
+          className="absolute right-4 top-4 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full text-lg text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-800"
         >
           ✕
         </button>
 
-        <h2 className="text-xl font-bold mb-5">{title}</h2>
+        {/* Title */}
+        <div className="mb-6 pr-8">
+          <h2 className="text-xl font-bold text-gray-900">{title}</h2>
+          <p className="mt-1 text-sm text-text-secondary">
+            Fill in the information below to create a task.
+          </p>
+        </div>
 
+        {/* Form */}
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           {fields.map((field) => (
             <div key={field.id}>
-              <label className="block mb-1">{field.title}</label>
+              <label
+                htmlFor={field.title}
+                className="mb-1.5 block text-sm font-medium text-gray-700"
+              >
+                {field.title}
+              </label>
 
               {field.type === "select" ? (
                 <select
+                  id={field.title}
                   name={field.title}
                   value={formData[field.title] ?? ""}
                   onChange={handleChange}
-                  className="w-full border rounded-lg p-2 mt-1 outline-none"
+                  className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2.5 text-sm text-gray-700 outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/10"
                 >
                   <option value="" disabled>
                     Select status
@@ -49,18 +64,34 @@ export default function Modal({
                 </select>
               ) : (
                 <input
+                  id={field.title}
                   type={field.type}
                   name={field.title}
                   value={formData[field.title] ?? ""}
                   onChange={handleChange}
-                  className="w-full border rounded-lg p-2 mt-1 outline-none"
+                  className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2.5 text-sm text-gray-700 outline-none transition-all placeholder:text-gray-400 focus:border-primary focus:ring-2 focus:ring-primary/10"
                 />
               )}
             </div>
           ))}
-          <button type="submit" className="bg-blue  rounded-lg p-2 text-black">
-            {submitText}
-          </button>
+
+          {/* Actions */}
+          <div className="mt-2 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
+            <button
+              type="button"
+              onClick={onClose}
+              className="w-full cursor-pointer rounded-lg border border-gray-200 px-4 py-2.5 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-50 sm:w-auto"
+            >
+              Cancel
+            </button>
+
+            <button
+              type="submit"
+              className="w-full cursor-pointer rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-white transition-all hover:bg-primary-dark hover:shadow-md sm:w-auto"
+            >
+              {submitText}
+            </button>
+          </div>
         </form>
       </div>
     </div>

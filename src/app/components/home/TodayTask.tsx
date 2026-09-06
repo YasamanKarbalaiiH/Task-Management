@@ -33,34 +33,43 @@ export default function TodayTasks({ data }: TodayTasksProps) {
   const displayedTasks = showAll ? data : data.slice(0, 2);
 
   return (
-    <div>
-      <div className="ml-3 flex justify-between">
-        <p className="font-bold">Today</p>
+    <section className="mt-2">
+      {/* Header */}
+      <div className="mb-4 flex items-center justify-between px-1">
+        <p className="text-lg font-bold text-gray-800">Today</p>
 
         <button
           onClick={() => setShowAll(!showAll)}
-          className="mr-2 text-sm text-text-secondary cursor-pointer"
+          className="cursor-pointer text-sm font-medium text-text-secondary transition-colors hover:text-gray-800"
         >
           {showAll ? "Show less" : "See all"}
         </button>
       </div>
 
-      <div className="flex gap-2 flex-wrap justify-center lg:justify-start">
+      {/* Tasks */}
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         {displayedTasks.map((item) => (
-          <div key={item.title} className="bg-white p-5 rounded-xl">
-            <div className="flex gap-5">
-              <p className="font-bold">{item.title}</p>
+          <div
+            key={item.title}
+            className="rounded-2xl bg-white p-5 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-md"
+          >
+            {/* Task title + percentage */}
+            <div className="flex items-start justify-between gap-3">
+              <p className="min-w-0 text-sm font-semibold text-gray-800">
+                {item.title}
+              </p>
 
               <span
-                className={`${
+                className={`shrink-0 rounded-full px-3 py-1 text-xs font-medium text-text-primary ${
                   projectColors[item.project]
-                } text-text-primary text-xs rounded-2xl p-1 w-15 h-6 text-center`}
+                }`}
               >
                 {item.percent}%
               </span>
             </div>
 
-            <div className="-space-x-3 mt-5 flex">
+            {/* Assignees */}
+            <div className="mt-5 flex -space-x-3">
               {item.assignees.map((assignee) => (
                 <Image
                   key={assignee.id}
@@ -68,13 +77,13 @@ export default function TodayTasks({ data }: TodayTasksProps) {
                   alt={assignee.name}
                   width={32}
                   height={32}
-                  className="rounded-full border-2 border-white"
+                  className="rounded-full border-2 border-white object-cover"
                 />
               ))}
             </div>
           </div>
         ))}
       </div>
-    </div>
+    </section>
   );
 }
