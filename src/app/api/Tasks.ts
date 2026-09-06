@@ -2,6 +2,7 @@ async function Tasks() {
   type Task = {
     id: string;
     title: string;
+    progress: number;
     status: "ongoing" | "process" | "complete" | "cancel";
     assignees: string[];
     dueDate: string;
@@ -46,7 +47,9 @@ async function Tasks() {
     });
 
     return {
+      id: task.id,
       title: task.title,
+      percent: task.progress,
       status: task.status,
       dueDate: task.dueDate,
       project: task.project,
