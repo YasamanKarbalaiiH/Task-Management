@@ -16,7 +16,7 @@ export default async function Home() {
 
   return (
     <div>
-      <CreateTask />
+      <CreateTask title="Dashboard" />
 
       <div className="flex flex-col md:flex-row justify-between  md:gap-7">
         <div className="pl-2 left-side w-auto md:w-2/3">

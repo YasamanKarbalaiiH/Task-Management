@@ -2,7 +2,7 @@ async function Tasks() {
   type Task = {
     id: string;
     title: string;
-    progress: number;
+    status: "ongoing" | "process" | "complete" | "cancel";
     assignees: string[];
     dueDate: string;
     project: string;
@@ -10,15 +10,17 @@ async function Tasks() {
 
   type User = {
     id: string;
+    name: string;
     avatar: string;
   };
+
   const res = await fetch("http://localhost:8000/tasks");
 
   if (!res.ok) {
     throw new Error("Failed to fetch tasks");
   }
 
-  const data = await res.json();
+  const data: Task[] = await res.json();
 
   const res2 = await fetch("http://localhost:8000/users");
 
@@ -26,11 +28,15 @@ async function Tasks() {
     throw new Error("Failed to fetch users");
   }
 
-  const users = await res2.json();
+  const users: User[] = await res2.json();
 
-  const tasks = data.map((task: Task) => {
-    const assignees = task.assignees.map((userId: string) => {
-      const user = users.find((user: User) => user.id === userId);
+  const tasks = data.map((task) => {
+    const assignees = task.assignees.map((userId) => {
+      const user = users.find((user) => user.id === userId);
+
+      if (!user) {
+        throw new Error(`User with id ${userId} not found`);
+      }
 
       return {
         id: user.id,
@@ -41,7 +47,7 @@ async function Tasks() {
 
     return {
       title: task.title,
-      percent: task.progress,
+      status: task.status,
       dueDate: task.dueDate,
       project: task.project,
       assignees,

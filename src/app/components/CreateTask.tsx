@@ -5,40 +5,25 @@ import Modal from "./Modal";
 import { useModal } from "../hooks/useModal";
 import { Fields } from "../types/taskFields";
 
+interface CreateTaskProps {
+  title: string;
+}
+
 const fields: Fields[] = [
-  {
-    id: "1",
-    title: "title",
-    type: "text",
-  },
-  {
-    id: "2",
-    title: "project",
-    type: "text",
-  },
+  { id: "1", title: "title", type: "text" },
+  { id: "2", title: "project", type: "text" },
   {
     id: "3",
     title: "status",
     type: "select",
     options: ["ongoing", "process", "complete", "cancel"],
   },
-  {
-    id: "4",
-    title: "progress",
-    type: "number",
-  },
-  {
-    id: "5",
-    title: "dueDate",
-    type: "date",
-  },
-  {
-    id: "6",
-    title: "assignees",
-    type: "text",
-  },
+  { id: "4", title: "progress", type: "number" },
+  { id: "5", title: "dueDate", type: "date" },
+  { id: "6", title: "assignees", type: "text" },
 ];
-export default function CreateTask() {
+
+export default function CreateTask({ title }: CreateTaskProps) {
   const {
     formData,
     isModalOpen,
@@ -51,7 +36,7 @@ export default function CreateTask() {
   return (
     <>
       <Header
-        title="Dashboard"
+        title={title}
         showDate={true}
         onCreateTask={() => openModal(null)}
       />

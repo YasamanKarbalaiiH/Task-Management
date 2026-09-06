@@ -1,11 +1,20 @@
-import Header from "../components/Header";
+import CreateTask from "../components/CreateTask";
+import Tasks from "../api/Tasks";
+import TaskList from "../components/tasks/TaskList";
 
-function page() {
+async function Page() {
+  const tasks = await Tasks();
+
   return (
-    <div>
-      <Header title="Tasks" showDate={false} />
-    </div>
+    <section>
+      <div>
+        <CreateTask title="Tasks" />
+      </div>
+      <div>
+        <TaskList tasks={tasks} />
+      </div>
+    </section>
   );
 }
 
-export default page;
+export default Page;
