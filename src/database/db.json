@@ -7,7 +7,11 @@
       "status": "ongoing",
       "progress": 85,
       "dueDate": "2026-09-24",
-      "assignees": ["1", "2", "3"]
+      "assignees": [
+        "1",
+        "2",
+        "3"
+      ]
     },
     {
       "id": "2",
@@ -16,7 +20,10 @@
       "status": "process",
       "progress": 72,
       "dueDate": "2026-09-26",
-      "assignees": ["2", "4"]
+      "assignees": [
+        "2",
+        "4"
+      ]
     },
     {
       "id": "3",
@@ -25,7 +32,10 @@
       "status": "complete",
       "progress": 100,
       "dueDate": "2026-09-28",
-      "assignees": ["1", "5"]
+      "assignees": [
+        "1",
+        "5"
+      ]
     },
     {
       "id": "4",
@@ -34,7 +44,9 @@
       "status": "ongoing",
       "progress": 64,
       "dueDate": "2026-09-30",
-      "assignees": ["3"]
+      "assignees": [
+        "3"
+      ]
     },
     {
       "id": "5",
@@ -43,7 +55,10 @@
       "status": "cancel",
       "progress": 20,
       "dueDate": "2026-10-01",
-      "assignees": ["4", "5"]
+      "assignees": [
+        "4",
+        "5"
+      ]
     }
   ],
   "users": [
@@ -99,6 +114,41 @@
       "senderId": "1",
       "text": "Can we schedule a meeting?",
       "time": "10:34 AM"
+    },
+    {
+      "id": "QfrhGqrNoTw",
+      "conversationId": "1",
+      "senderId": "1",
+      "text": "ok",
+      "time": "06:34 PM"
+    },
+    {
+      "id": "51Mj2qYx12E",
+      "conversationId": "1788707276261",
+      "senderId": "1",
+      "text": "hey",
+      "time": "06:37 PM"
+    },
+    {
+      "id": "g7eGrycIwpQ",
+      "conversationId": "1788707315412",
+      "senderId": "1",
+      "text": "hey",
+      "time": "06:38 PM"
+    },
+    {
+      "id": "9E4lq3LFawk",
+      "conversationId": "2",
+      "senderId": "1",
+      "text": "hey",
+      "time": "06:47 PM"
+    },
+    {
+      "id": "XzJH3mnn_y4",
+      "conversationId": "4",
+      "senderId": "1",
+      "text": "hey",
+      "time": "06:54 PM"
     }
   ],
   "notifications": [
@@ -165,6 +215,36 @@
     "cancelled": 7,
     "ongoing": 14
   },
+  "conversations": [
+    {
+      "id": "1",
+      "participants": [
+        "1",
+        "2"
+      ]
+    },
+    {
+      "id": "2",
+      "participants": [
+        "1",
+        "3"
+      ]
+    },
+    {
+      "id": "3",
+      "participants": [
+        "1",
+        "4"
+      ]
+    },
+    {
+      "id": "4",
+      "participants": [
+        "1",
+        "5"
+      ]
+    }
+  ],
   "profile": {
     "id": "1",
     "name": "Nasir Jamshed",
