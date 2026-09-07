@@ -6,6 +6,7 @@ import Chat from "../components/chats/Chat";
 async function Page() {
   const messages = await Message();
   const users = await Users();
+
   return (
     <main className="min-h-screen bg-background px-4 py-5 md:px-6 lg:px-8">
       <div className="mx-auto max-w-[1600px]">
@@ -13,7 +14,7 @@ async function Page() {
           <CreateTask title="Chats" />
         </div>
 
-        <section>
+        <section className="w-full">
           <Chat messages={messages} users={users} />
         </section>
       </div>

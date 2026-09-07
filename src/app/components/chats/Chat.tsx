@@ -15,17 +15,14 @@ type Conversation = {
   id: string;
   participants: string[];
 };
+
 export default function Chat({ messages, users }: ChatProps) {
   const currentUserId = "1";
 
   const [localMessages, setLocalMessages] = useState<Message[]>(messages);
-
   const [conversations, setConversations] = useState<Conversation[]>([]);
-
   const [selectedUserId, setSelectedUserId] = useState("2");
-
   const [search, setSearch] = useState("");
-
   const [messageText, setMessageText] = useState("");
 
   useEffect(() => {
@@ -38,7 +35,6 @@ export default function Chat({ messages, users }: ChatProps) {
         }
 
         const data: Conversation[] = await res.json();
-
         setConversations(data);
       } catch (error) {
         console.error("Error fetching conversations:", error);
@@ -133,7 +129,6 @@ export default function Chat({ messages, users }: ChatProps) {
       const savedMessage: Message = await res.json();
 
       setLocalMessages((prev) => [...prev, savedMessage]);
-
       setMessageText("");
     } catch (error) {
       console.error("Error sending message:", error);
@@ -141,13 +136,13 @@ export default function Chat({ messages, users }: ChatProps) {
   };
 
   return (
-    <div className="mt-5 flex min-h-[calc(100vh-180px)] w-full flex-col overflow-hidden rounded-2xl border border-border bg-white shadow-sm lg:flex-row">
-      <aside className="flex w-full shrink-0 flex-col border-b border-border lg:w-75 lg:border-b-0 lg:border-r">
-        <div className="hidden border-b border-border px-5 py-4 lg:block">
+    <div className="flex min-h-[calc(100vh-190px)] w-full flex-col overflow-hidden rounded-2xl border border-border bg-white shadow-sm lg:min-h-[calc(100vh-180px)] lg:flex-row">
+      {/* Users */}
+      <aside className="flex w-full shrink-0 flex-col border-b border-border lg:w-72 lg:border-b-0 lg:border-r">
+        {/* Desktop Header */}
+        <div className="hidden border-b border-border px-5 py-5 lg:block">
           <div className="mb-4">
-            <h2 className="text-base font-semibold text-text-primary">
-              Messages
-            </h2>
+            <h2 className="text-base font-bold text-gray-800">Messages</h2>
 
             <p className="mt-1 text-xs text-text-secondary">
               Your recent conversations
@@ -157,12 +152,13 @@ export default function Chat({ messages, users }: ChatProps) {
           <div className="relative">
             <svg
               className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted"
-              width="16"
-              height="16"
+              width="17"
+              height="17"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
               strokeWidth="2"
+              aria-hidden="true"
             >
               <circle cx="11" cy="11" r="8" />
               <path d="m21 21-4.3-4.3" />
@@ -173,26 +169,22 @@ export default function Chat({ messages, users }: ChatProps) {
               value={search}
               onChange={(event) => setSearch(event.target.value)}
               placeholder="Search people..."
-              className="h-10 w-full rounded-xl border border-border bg-background pl-9 pr-3 text-xs text-text-primary outline-none transition placeholder:text-text-muted focus:border-primary/40 focus:bg-white focus:ring-4 focus:ring-primary-light"
+              className="h-11 w-full rounded-xl border border-border bg-background pl-10 pr-3 text-sm text-text-primary outline-none transition-all placeholder:text-text-muted focus:border-primary/40 focus:bg-white focus:ring-2 focus:ring-primary/10"
             />
           </div>
         </div>
 
+        {/* Mobile Header */}
         <div className="flex items-center justify-between border-b border-border px-4 py-3 lg:hidden">
           <div>
-            <h2 className="text-sm font-semibold text-text-primary">
-              Messages
-            </h2>
+            <h2 className="text-sm font-bold text-gray-800">Messages</h2>
 
             <p className="mt-0.5 text-[10px] text-text-secondary">
               {users.length} conversations
             </p>
           </div>
 
-          <button
-            type="button"
-            className="flex h-9 w-9 items-center justify-center rounded-xl bg-background text-text-secondary transition hover:bg-primary-light hover:text-primary"
-          >
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary-light text-primary">
             <svg
               width="17"
               height="17"
@@ -200,14 +192,16 @@ export default function Chat({ messages, users }: ChatProps) {
               fill="none"
               stroke="currentColor"
               strokeWidth="2"
+              aria-hidden="true"
             >
               <circle cx="11" cy="11" r="8" />
               <path d="m21 21-4.3-4.3" />
             </svg>
-          </button>
+          </div>
         </div>
 
-        <div className="flex gap-2 overflow-x-auto p-3 scrollbar-none lg:flex-1 lg:flex-col lg:gap-1 lg:overflow-x-hidden lg:overflow-y-auto lg:p-3">
+        {/* User List */}
+        <div className="scrollbar-none flex gap-2 overflow-x-auto p-3 lg:flex-1 lg:flex-col lg:gap-1.5 lg:overflow-x-hidden lg:overflow-y-auto lg:p-3">
           {filteredUsers.map((user) => {
             const isSelected = user.id === selectedUserId;
 
@@ -246,6 +240,7 @@ export default function Chat({ messages, users }: ChatProps) {
                   <span className="absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full border-2 border-white bg-green" />
                 </div>
 
+                {/* Desktop User Info */}
                 <div className="hidden min-w-0 flex-1 lg:block">
                   <div className="flex items-center justify-between gap-2">
                     <p
@@ -266,6 +261,7 @@ export default function Chat({ messages, users }: ChatProps) {
                   </p>
                 </div>
 
+                {/* Mobile User Name */}
                 <div className="max-w-22.5 lg:hidden">
                   <p
                     className={`truncate text-[11px] font-semibold ${
@@ -285,9 +281,11 @@ export default function Chat({ messages, users }: ChatProps) {
         </div>
       </aside>
 
-      <section className="flex min-h-137.5 min-w-0 flex-1 flex-col">
+      {/* Chat Area */}
+      <section className="flex min-h-125 min-w-0 flex-1 flex-col">
         {selectedUser ? (
           <>
+            {/* Chat Header */}
             <header className="flex shrink-0 items-center justify-between border-b border-border bg-white px-4 py-3 sm:px-6">
               <div className="flex min-w-0 items-center gap-3">
                 <div className="relative shrink-0">
@@ -303,11 +301,13 @@ export default function Chat({ messages, users }: ChatProps) {
                 </div>
 
                 <div className="min-w-0">
-                  <h3 className="truncate text-sm font-semibold text-text-primary sm:text-[15px]">
+                  <h3 className="truncate text-sm font-bold text-gray-800 sm:text-[15px]">
                     {selectedUser.name}
                   </h3>
 
                   <div className="mt-0.5 flex items-center gap-1.5">
+                    <span className="h-1.5 w-1.5 rounded-full bg-green" />
+
                     <span className="text-[10px] text-text-secondary sm:text-xs">
                       Active now
                     </span>
@@ -318,6 +318,7 @@ export default function Chat({ messages, users }: ChatProps) {
               <div className="flex items-center gap-1">
                 <button
                   type="button"
+                  aria-label="Call"
                   className="flex h-9 w-9 items-center justify-center rounded-lg text-text-secondary transition hover:bg-background hover:text-primary"
                 >
                   <svg
@@ -327,6 +328,7 @@ export default function Chat({ messages, users }: ChatProps) {
                     fill="none"
                     stroke="currentColor"
                     strokeWidth="1.8"
+                    aria-hidden="true"
                   >
                     <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.9.33 1.78.62 2.63a2 2 0 0 1-.45 2.11L8 9.73a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.85.29 1.73.5 2.63.62A2 2 0 0 1 22 16.92z" />
                   </svg>
@@ -334,6 +336,7 @@ export default function Chat({ messages, users }: ChatProps) {
 
                 <button
                   type="button"
+                  aria-label="Images"
                   className="hidden h-9 w-9 items-center justify-center rounded-lg text-text-secondary transition hover:bg-background hover:text-primary sm:flex"
                 >
                   <svg
@@ -343,15 +346,16 @@ export default function Chat({ messages, users }: ChatProps) {
                     fill="none"
                     stroke="currentColor"
                     strokeWidth="1.8"
+                    aria-hidden="true"
                   >
                     <rect x="3" y="3" width="18" height="18" rx="2" />
-
                     <path d="m8 16 3-3 2 2 3-4 3 4" />
                   </svg>
                 </button>
 
                 <button
                   type="button"
+                  aria-label="More options"
                   className="flex h-9 w-9 items-center justify-center rounded-lg text-text-secondary transition hover:bg-background hover:text-primary"
                 >
                   <svg
@@ -361,6 +365,7 @@ export default function Chat({ messages, users }: ChatProps) {
                     fill="none"
                     stroke="currentColor"
                     strokeWidth="2"
+                    aria-hidden="true"
                   >
                     <circle cx="12" cy="5" r="1" />
                     <circle cx="12" cy="12" r="1" />
@@ -370,11 +375,12 @@ export default function Chat({ messages, users }: ChatProps) {
               </div>
             </header>
 
+            {/* Messages */}
             <div className="min-h-0 flex-1 overflow-y-auto bg-background/60 px-3 py-5 sm:px-6 sm:py-6">
               <div className="mx-auto flex w-full max-w-4xl flex-col gap-5">
                 {selectedMessages.length > 0 && (
                   <div className="flex items-center justify-center">
-                    <span className="rounded-full bg-white px-3 py-1 text-[9px] font-medium text-text-muted shadow-sm">
+                    <span className="rounded-full border border-border bg-white px-3 py-1 text-[9px] font-medium text-text-muted shadow-sm">
                       Today
                     </span>
                   </div>
@@ -437,6 +443,7 @@ export default function Chat({ messages, users }: ChatProps) {
                               stroke="currentColor"
                               strokeWidth="2"
                               className="text-primary"
+                              aria-hidden="true"
                             >
                               <path d="m5 12 4 4L19 6" />
                               <path d="m11 12 4 4 5-6" />
@@ -449,7 +456,7 @@ export default function Chat({ messages, users }: ChatProps) {
                 })}
 
                 {selectedMessages.length === 0 && (
-                  <div className="flex min-h-75 flex-col items-center justify-center text-center">
+                  <div className="flex min-h-75 flex-col items-center justify-center px-4 text-center">
                     <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary-light text-primary">
                       <svg
                         width="24"
@@ -458,12 +465,13 @@ export default function Chat({ messages, users }: ChatProps) {
                         fill="none"
                         stroke="currentColor"
                         strokeWidth="1.8"
+                        aria-hidden="true"
                       >
                         <path d="M21 11.5a8.4 8.4 0 0 1-9 8.5 9.4 9.4 0 0 1-4-.9L3 21l1.9-4.6A8.4 8.4 0 0 1 3 11.5 8.4 8.4 0 0 1 12 3a8.4 8.4 0 0 1 9 8.5Z" />
                       </svg>
                     </div>
 
-                    <p className="text-sm font-medium text-text-primary">
+                    <p className="text-sm font-semibold text-text-primary">
                       No messages yet
                     </p>
 
@@ -475,10 +483,12 @@ export default function Chat({ messages, users }: ChatProps) {
               </div>
             </div>
 
+            {/* Message Input */}
             <footer className="shrink-0 border-t border-border bg-white p-3 sm:p-4">
-              <div className="mx-auto flex max-w-4xl items-end gap-2 rounded-2xl border border-border bg-background p-1.5 transition focus-within:border-primary/30 focus-within:bg-white focus-within:ring-4 focus-within:ring-primary-light">
+              <div className="mx-auto flex max-w-4xl items-end gap-2 rounded-2xl border border-border bg-background p-1.5 transition-all focus-within:border-primary/30 focus-within:bg-white focus-within:ring-2 focus-within:ring-primary/10">
                 <button
                   type="button"
+                  aria-label="Add attachment"
                   className="mb-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-text-secondary transition hover:bg-primary-light hover:text-primary"
                 >
                   <svg
@@ -488,6 +498,7 @@ export default function Chat({ messages, users }: ChatProps) {
                     fill="none"
                     stroke="currentColor"
                     strokeWidth="1.8"
+                    aria-hidden="true"
                   >
                     <path d="M12 5v14M5 12h14" />
                   </svg>
@@ -500,7 +511,6 @@ export default function Chat({ messages, users }: ChatProps) {
                   onKeyDown={(event) => {
                     if (event.key === "Enter" && !event.shiftKey) {
                       event.preventDefault();
-
                       handleSend();
                     }
                   }}
@@ -512,7 +522,8 @@ export default function Chat({ messages, users }: ChatProps) {
                   type="button"
                   onClick={handleSend}
                   disabled={!messageText.trim()}
-                  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary text-white transition hover:bg-primary-dark disabled:cursor-not-allowed disabled:opacity-40"
+                  aria-label="Send message"
+                  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary text-white transition-all hover:bg-primary-dark hover:shadow-md disabled:cursor-not-allowed disabled:opacity-40"
                 >
                   <svg
                     width="17"
@@ -521,6 +532,7 @@ export default function Chat({ messages, users }: ChatProps) {
                     fill="none"
                     stroke="currentColor"
                     strokeWidth="2"
+                    aria-hidden="true"
                   >
                     <path d="m22 2-7 20-4-9-9-4Z" />
                     <path d="M22 2 11 13" />
@@ -540,6 +552,7 @@ export default function Chat({ messages, users }: ChatProps) {
                   fill="none"
                   stroke="currentColor"
                   strokeWidth="1.8"
+                  aria-hidden="true"
                 >
                   <path d="M21 11.5a8.4 8.4 0 0 1-9 8.5 9.4 9.4 0 0 1-4-.9L3 21l1.9-4.6A8.4 8.4 0 0 1 3 11.5 8.4 8.4 0 0 1 12 3a8.4 8.4 0 0 1 9 8.5Z" />
                 </svg>
