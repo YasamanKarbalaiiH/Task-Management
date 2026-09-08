@@ -7,6 +7,7 @@ async function Status() {
 
   const tasks = await res.json();
   const stats = {
+    total: tasks.totalTasks,
     cancel: tasks.cancelled,
     complete: tasks.completed,
     ongoing: tasks.ongoing,

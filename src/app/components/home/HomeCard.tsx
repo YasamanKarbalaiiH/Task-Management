@@ -2,6 +2,7 @@ import Ongoing from "../../img/icons8-in-progress-50.png";
 import Process from "../../img/icons8-process-50.png";
 import Complete from "../../img/icons8-complete-50.png";
 import Cancel from "../../img/icons8-cancel-48.png";
+import total from "../../img/icons8-tasks-80.png";
 import Image from "next/image";
 
 interface statsType {
@@ -9,6 +10,7 @@ interface statsType {
   complete: number;
   ongoing: number;
   process: number;
+  total?: number;
 }
 
 interface HomeCardProps {
@@ -17,6 +19,9 @@ interface HomeCardProps {
 
 function HomeCard({ stats }: HomeCardProps) {
   const cards = [
+    ...(stats.total !== undefined
+      ? [{ title: "Total Tasks", value: stats.total, icon: total }]
+      : []),
     {
       title: "Ongoing",
       value: stats.ongoing,
