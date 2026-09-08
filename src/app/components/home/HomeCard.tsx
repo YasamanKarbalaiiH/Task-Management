@@ -45,7 +45,7 @@ function HomeCard({ stats }: HomeCardProps) {
   ];
 
   return (
-    <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
+    <div className="grid grid-cols-2 gap-4 lg:grid-cols-4 mb-5 mt-5">
       {cards.map((item) => (
         <div
           key={item.title}
