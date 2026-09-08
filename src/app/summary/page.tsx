@@ -1,9 +1,9 @@
 import CreateTask from "../components/CreateTask";
 import Status from "../api/Status";
-import SummaryCard from "../components/summary/SummaryCard";
 import TopCard from "../components/summary/TopCard";
 import Tasks from "../api/Tasks";
 import TaskLineChart from "../components/summary/LineChart";
+import HomeCard from "../components/home/HomeCard";
 async function page() {
   const stats = await Status();
   const task = await Tasks();
@@ -14,7 +14,7 @@ async function page() {
         <CreateTask title="Summary" />
       </section>
       <section>
-        <SummaryCard stats={stats} />
+        <HomeCard stats={stats} />
       </section>
       <div className="p-5">
         <section className="grid grid-cols-1 md:grid-cols-2 gap-3">
