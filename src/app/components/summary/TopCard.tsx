@@ -23,8 +23,8 @@ function TopCard({ data }: TasksProps) {
 
       <div className="flex flex-col gap-8">
         {data.map((item) => (
-          <div key={item.title} className="flex flex-col gap-2">
-            <span>{item.project}</span>
+          <div key={item.project} className="flex flex-col gap-2">
+            <span>{item.title}</span>
 
             <div className="flex items-center gap-3">
               <div className="h-2 w-[50%] rounded-full bg-gray-200">
