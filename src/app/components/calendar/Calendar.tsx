@@ -292,7 +292,7 @@ export default function Calendar({ tasks, events }: CalendarProps) {
 
     return (
       <div className="overflow-x-auto">
-        <div className="grid min-w-175 grid-cols-7 overflow-hidden rounded-2xl border border-border">
+        <div className="grid min-w-175 grid-cols-7 overflow-hidden rounded-2xl  border border-border">
           {days.map((day) => (
             <div
               key={day.toISOString()}
@@ -422,7 +422,7 @@ export default function Calendar({ tasks, events }: CalendarProps) {
   };
 
   return (
-    <div className="relative w-full rounded-2xl bg-white p-4 shadow-sm sm:p-5 lg:p-6">
+    <div className="relative w-full rounded-2xl bg-white p-4 shadow-xl sm:p-5 lg:p-6">
       {/* =====================================
           HEADER
       ===================================== */}
