@@ -1,7 +1,7 @@
-import React from "react";
 import CreateTask from "../components/CreateTask";
-
-function page() {
+import Alart from "../api/Alart";
+async function page() {
+  const notifs = await Alart();
   return (
     <div>
       <section>
