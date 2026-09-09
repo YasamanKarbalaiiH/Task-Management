@@ -698,7 +698,7 @@ export default function Calendar({ tasks, events }: CalendarProps) {
                 htmlFor="event-time"
                 className="mb-2 block text-sm font-medium text-gray-600"
               >
-                Type
+                Event Type
               </label>
 
               <input
