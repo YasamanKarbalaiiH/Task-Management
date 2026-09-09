@@ -406,7 +406,7 @@ export default function Calendar({ tasks, events }: CalendarProps) {
   };
 
   return (
-    <div className="relative w-full rounded-2xl bg-white p-5 shadow-sm">
+    <div className="relative w-full rounded-2xl bg-white p-5 shadow-xl">
       {/* =====================================
           HEADER
       ===================================== */}
