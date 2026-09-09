@@ -3,6 +3,7 @@ interface alart {
   time: string;
   type: string;
   message: string;
+  read: boolean;
 }
 
 async function Alart() {
@@ -16,6 +17,7 @@ async function Alart() {
     time: item.time,
     type: item.type,
     message: item.message,
+    read: item.read,
   }));
   return alarts;
 }

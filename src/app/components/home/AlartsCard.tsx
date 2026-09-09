@@ -8,6 +8,7 @@ type Time = {
   time: string;
   type: string;
   message: string;
+  read: boolean;
 };
 
 interface Props {
