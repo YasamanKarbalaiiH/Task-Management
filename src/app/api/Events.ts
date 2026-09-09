@@ -3,7 +3,7 @@ export interface CalendarEvent {
   title: string;
   date: string;
   time: string;
-  type: "meeting";
+  type: string;
 }
 
 async function Events(): Promise<CalendarEvent[]> {

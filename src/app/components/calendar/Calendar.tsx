@@ -73,6 +73,7 @@ export default function Calendar({ tasks, events }: CalendarProps) {
   const [eventTitle, setEventTitle] = useState("");
   const [eventDate, setEventDate] = useState("");
   const [eventTime, setEventTime] = useState("");
+  const [eventType, setEventType] = useState("");
 
   const [calendarEvents, setCalendarEvents] = useState<CalendarEvent[]>(events);
 
@@ -138,7 +139,7 @@ export default function Calendar({ tasks, events }: CalendarProps) {
       title: eventTitle,
       date: eventDate,
       time: eventTime,
-      type: "meeting",
+      type: eventType,
     };
 
     try {
@@ -161,6 +162,7 @@ export default function Calendar({ tasks, events }: CalendarProps) {
       setEventTitle("");
       setEventDate("");
       setEventTime("");
+      setEventType("");
       setShowCreateEvent(false);
     } catch (error) {
       console.error(error);
@@ -622,7 +624,7 @@ export default function Calendar({ tasks, events }: CalendarProps) {
                 </h3>
 
                 <p className="mt-1 text-xs text-gray-400">
-                  Add a new meeting to your calendar
+                  Add a new task to your calendar
                 </p>
               </div>
 
@@ -687,6 +689,23 @@ export default function Calendar({ tasks, events }: CalendarProps) {
                 value={eventTime}
                 onChange={(e) => setEventTime(e.target.value)}
                 type="time"
+                className="w-full rounded-xl border border-border bg-white px-3 py-2.5 text-sm text-gray-600 outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/10"
+              />
+            </div>
+            {/* Type */}
+            <div className="mb-5">
+              <label
+                htmlFor="event-time"
+                className="mb-2 block text-sm font-medium text-gray-600"
+              >
+                Type
+              </label>
+
+              <input
+                id="event-type"
+                value={eventType}
+                onChange={(e) => setEventType(e.target.value)}
+                type="text"
                 className="w-full rounded-xl border border-border bg-white px-3 py-2.5 text-sm text-gray-600 outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/10"
               />
             </div>
