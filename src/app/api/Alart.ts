@@ -1,4 +1,4 @@
-interface alart {
+export interface alart {
   title: string;
   time: string;
   type: string;

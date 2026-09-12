@@ -1,16 +1,10 @@
 "use client";
 
 import Swal from "sweetalert2";
+import { alart } from "@/app/api/Alart";
 
-type data = {
-  title: string;
-  time: string;
-  type: string;
-  message: string;
-  read: boolean;
-};
 type dataProps = {
-  data: data[];
+  data: alart[];
 };
 function alertMassage(message: string) {
   Swal.fire(message);

@@ -7,11 +7,7 @@
       "status": "ongoing",
       "progress": 85,
       "dueDate": "2026-09-24",
-      "assignees": [
-        "1",
-        "2",
-        "3"
-      ]
+      "assignees": ["1", "2", "3"]
     },
     {
       "id": "2",
@@ -20,10 +16,7 @@
       "status": "process",
       "progress": 72,
       "dueDate": "2026-09-26",
-      "assignees": [
-        "2",
-        "4"
-      ]
+      "assignees": ["2", "4"]
     },
     {
       "id": "3",
@@ -32,10 +25,7 @@
       "status": "complete",
       "progress": 100,
       "dueDate": "2026-09-28",
-      "assignees": [
-        "1",
-        "5"
-      ]
+      "assignees": ["1", "5"]
     },
     {
       "id": "4",
@@ -44,9 +34,7 @@
       "status": "ongoing",
       "progress": 64,
       "dueDate": "2026-09-30",
-      "assignees": [
-        "3"
-      ]
+      "assignees": ["3"]
     },
     {
       "id": "5",
@@ -55,10 +43,7 @@
       "status": "cancel",
       "progress": 20,
       "dueDate": "2026-10-01",
-      "assignees": [
-        "4",
-        "5"
-      ]
+      "assignees": ["4", "5"]
     }
   ],
   "users": [
@@ -218,31 +203,19 @@
   "conversations": [
     {
       "id": "1",
-      "participants": [
-        "1",
-        "2"
-      ]
+      "participants": ["1", "2"]
     },
     {
       "id": "2",
-      "participants": [
-        "1",
-        "3"
-      ]
+      "participants": ["1", "3"]
     },
     {
       "id": "3",
-      "participants": [
-        "1",
-        "4"
-      ]
+      "participants": ["1", "4"]
     },
     {
       "id": "4",
-      "participants": [
-        "1",
-        "5"
-      ]
+      "participants": ["1", "5"]
     }
   ],
   "profile": {
@@ -252,7 +225,8 @@
     "email": "nasir@example.com",
     "phone": "+123 456 7890",
     "location": "United States",
-    "joined": "2026-01-20"
+    "joined": "2026-01-20",
+    "avatar": "https://i.pravatar.cc/150?img=12"
   },
   "$schema": "./node_modules/json-server/schema.json"
 }
