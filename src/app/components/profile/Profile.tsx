@@ -70,7 +70,7 @@ function Profile({ data }: dataProps) {
     <>
       <div className="mt-10 flex flex-col gap-5 p-5">
         <div className="rounded-2xl bg-white p-5 shadow-xl">
-          <div className="flex items-center justify-center gap-20">
+          <div className="flex flex-col md:flex-row items-center  justify-center gap-20">
             <Image
               key={data.id}
               src={data.avatar}
@@ -80,12 +80,12 @@ function Profile({ data }: dataProps) {
               className="rounded-full border-2 border-white"
             />
 
-            <div>
+            <div className="p-3 flex flex-col justify-center items-center">
               <p className="font-bold">{data.name}</p>
 
               <span className="text-text-secondary">{data.role}</span>
 
-              <div className="mt-8 flex flex-col gap-3">
+              <div className="mt-8 flex flex-col justify-center items-center gap-3">
                 <div className="flex items-center gap-3">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -138,7 +138,7 @@ function Profile({ data }: dataProps) {
 
               <button
                 onClick={handleEdit}
-                className="mt-7 rounded-2xl bg-purple p-5 text-white transition-colors duration-300 hover:bg-purple/80"
+                className="mt-7 rounded-2xl bg-purple p-3 md:p-5 text-white transition-colors duration-300 hover:bg-purple/80"
               >
                 Edit Information
               </button>
@@ -150,27 +150,27 @@ function Profile({ data }: dataProps) {
           <p className="mb-5 font-bold">Personal Information</p>
 
           <div className="flex flex-col gap-3">
-            <div className="flex items-center justify-between border-b border-b-text-muted p-2">
+            <div className="flex flex-col md:flex-row items-center justify-between border-b border-b-text-muted p-2">
               <span>Full Name</span>
               <span className="text-text-secondary">{data.name}</span>
             </div>
 
-            <div className="flex items-center justify-between border-b border-b-text-muted p-2">
+            <div className="flex flex-col md:flex-row  items-center justify-between border-b border-b-text-muted p-2">
               <span>Email</span>
               <span className="text-text-secondary">{data.email}</span>
             </div>
 
-            <div className="flex items-center justify-between border-b border-b-text-muted p-2">
+            <div className="flex flex-col md:flex-row  items-center justify-between border-b border-b-text-muted p-2">
               <span>Phone Number</span>
               <span className="text-text-secondary">{data.phone}</span>
             </div>
 
-            <div className="flex items-center justify-between border-b border-b-text-muted p-2">
+            <div className="flex flex-col md:flex-row  items-center justify-between border-b border-b-text-muted p-2">
               <span>Location</span>
               <span className="text-text-secondary">{data.location}</span>
             </div>
 
-            <div className="flex items-center justify-between p-2">
+            <div className="flex flex-col md:flex-row items-center justify-between p-2">
               <span>Joined</span>
               <span className="text-text-secondary">{data.joined}</span>
             </div>
