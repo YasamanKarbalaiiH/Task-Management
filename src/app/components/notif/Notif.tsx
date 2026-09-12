@@ -17,8 +17,8 @@ function alertMassage(message: string) {
 }
 function Notif({ data }: dataProps) {
   return (
-    <div className="mt-10 ml-3 w-3/4">
-      <div className="grid grid-cols-1 grid-rows-1 gap-7">
+    <div className="mt-10 ml-3 w-full ">
+      <div className="flex flex-col gap-7 ">
         {data.map((item) => (
           <div
             key={item.title}

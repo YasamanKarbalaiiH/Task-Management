@@ -9,7 +9,7 @@ async function page() {
   const task = await Tasks();
 
   return (
-    <div>
+    <div className="min-h-screen bg-background px-4 py-5 md:px-6 lg:px-8">
       <section>
         <CreateTask title="Summary" />
       </section>

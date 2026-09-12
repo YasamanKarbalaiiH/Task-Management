@@ -15,7 +15,7 @@ export default async function Home() {
   const overview = await TaskChartData();
 
   return (
-    <div>
+    <div className="min-h-screen bg-background px-4 py-5 md:px-6 lg:px-8">
       <CreateTask title="Dashboard" />
 
       <div className="flex flex-col md:flex-row justify-between  md:gap-7">

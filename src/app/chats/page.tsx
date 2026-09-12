@@ -8,7 +8,7 @@ async function Page() {
   const users = await Users();
 
   return (
-    <section>
+    <section className="min-h-screen bg-background px-4 py-5 md:px-6 lg:px-8">
       <CreateTask title="Chats" />
 
       <Chat messages={messages} users={users} />
