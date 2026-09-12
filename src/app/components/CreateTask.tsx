@@ -31,7 +31,7 @@ export default function CreateTask({ title }: CreateTaskProps) {
     handleSubmit,
     openModal,
     closeModal,
-  } = useModal(fields);
+  } = useModal(fields, "task");
 
   return (
     <>

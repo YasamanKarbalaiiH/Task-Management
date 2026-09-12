@@ -10,8 +10,11 @@ type User = {
 
 const TASKS_API = "http://localhost:8000/tasks";
 const USERS_API = "http://localhost:8000/users";
+const PROFILE_API = "http://localhost:8000/profile";
 
-export function useModal(fields: Fields[]) {
+type ModalType = "task" | "profile";
+
+export function useModal(fields: Fields[], type: ModalType = "task") {
   const [formData, setFormData] = useState<FormData>(createFormData(fields));
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -25,14 +28,14 @@ export function useModal(fields: Fields[]) {
   ) => {
     const { name, value } = e.target;
 
-    setFormData((prev: FormData) => ({
+    setFormData((prev) => ({
       ...prev,
       [name]: value,
     }));
   };
 
   const handleSelectChange = (name: string, value: string) => {
-    setFormData((prev: FormData) => ({
+    setFormData((prev) => ({
       ...prev,
       [name]: value,
     }));
@@ -42,63 +45,92 @@ export function useModal(fields: Fields[]) {
     e.preventDefault();
 
     try {
-      const usersRes = await fetch(USERS_API);
+      if (type === "profile") {
+        if (!editingItem) {
+          return;
+        }
 
-      if (!usersRes.ok) {
-        throw new Error("Failed to fetch users");
-      }
+        const profileData = {
+          id: editingItem.id,
+          name: formData.name,
+          role: formData.role,
+          email: formData.email,
+          phone: formData.phone,
+          location: formData.location,
+          joined: formData.joined,
+          avatar: formData.avatar ?? "",
+        };
 
-      const usersData: { users: User[] } = await usersRes.json();
-
-      const users = usersData.users;
-
-      const assignedNames = formData.assignees
-        .split(",")
-        .map((name) => name.trim())
-        .filter(Boolean);
-
-      const assigneeIds = assignedNames
-        .map((name) => {
-          const user = users.find(
-            (user) => user.name.toLowerCase() === name.toLowerCase(),
-          );
-
-          return user?.id;
-        })
-        .filter((id): id is string => id !== undefined);
-
-      const taskData = {
-        title: formData.title,
-        project: formData.project,
-        status: formData.status,
-        progress: Number(formData.progress),
-        dueDate: formData.dueDate,
-        assignees: assigneeIds,
-      };
-
-      if (editingItem) {
-        const res = await fetch(`${TASKS_API}/${editingItem.id}`, {
+        const res = await fetch(PROFILE_API, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(taskData),
+          body: JSON.stringify(profileData),
         });
 
         if (!res.ok) {
-          throw new Error("Failed to update task");
+          throw new Error("Failed to update profile");
         }
-      } else {
-        const res = await fetch(TASKS_API, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(taskData),
-        });
+      }
 
-        if (!res.ok) {
-          throw new Error("Failed to create task");
+      if (type === "task") {
+        const usersRes = await fetch(USERS_API);
+
+        if (!usersRes.ok) {
+          throw new Error("Failed to fetch users");
+        }
+
+        const usersData: { users: User[] } = await usersRes.json();
+
+        const assignedNames = formData.assignees
+          .split(",")
+          .map((name) => name.trim())
+          .filter(Boolean);
+
+        const assigneeIds = assignedNames
+          .map((name) => {
+            const user = usersData.users.find(
+              (user) => user.name.toLowerCase() === name.toLowerCase(),
+            );
+
+            return user?.id;
+          })
+          .filter((id): id is string => id !== undefined);
+
+        const taskData = {
+          title: formData.title,
+          project: formData.project,
+          status: formData.status,
+          progress: Number(formData.progress),
+          dueDate: formData.dueDate,
+          assignees: assigneeIds,
+        };
+
+        if (editingItem) {
+          const res = await fetch(`${TASKS_API}/${editingItem.id}`, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(taskData),
+          });
+
+          if (!res.ok) {
+            throw new Error("Failed to update task");
+          }
+        } else {
+          const res = await fetch(TASKS_API, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(taskData),
+          });
+
+          if (!res.ok) {
+            throw new Error("Failed to create task");
+          }
         }
       }
 
