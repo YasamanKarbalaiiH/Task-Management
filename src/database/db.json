@@ -225,7 +225,8 @@
     "email": "nasir@example.com",
     "phone": "+123 456 7890",
     "location": "United States",
-    "joined": "2026-01-20"
+    "joined": "2026-01-20",
+    "avatar": "https://i.pravatar.cc/150?img=12"
   },
   "$schema": "./node_modules/json-server/schema.json"
 }
