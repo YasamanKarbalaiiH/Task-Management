@@ -68,7 +68,7 @@ function Profile({ data }: dataProps) {
 
   return (
     <>
-      <div className="mt-10 flex flex-col gap-5 p-5">
+      <div className="mx-auto mt-10 flex w-full max-w-5xl flex-col gap-5 p-5">
         <div className="rounded-2xl bg-white p-5 shadow-xl">
           <div className="flex flex-col md:flex-row items-center  justify-center gap-20">
             <Image
